@@ -1,0 +1,13 @@
+<%- include("header.ejs")%>
+<!--  -->
+<%- include("nav.ejs")%>
+<!--  -->
+<form action="/signup" method="POST">
+    <input type="text" name="username" placeholder="username" />
+    <input type="password" name="password" placeholder="password" />
+    <input type="email" name="email" placeholder="email" />
+    <button>Signup</button>
+    <a href="/signin">Sign in</a>
+</form>
+<!--  -->
+<%- include("footer.ejs")%>

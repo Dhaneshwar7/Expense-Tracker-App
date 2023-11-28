@@ -1,0 +1,11 @@
+<%- include("header.ejs")%>
+<!--  -->
+<%- include("nav.ejs")%>
+<!--  -->
+<h1>👋 <%= admin.username %></h1>
+
+<a href="/createexpense">Add New Expense</a>
+<hr />
+<%= JSON.stringify(admin)%>
+<!--  -->
+<%- include("footer.ejs")%>

@@ -1,0 +1,14 @@
+<%- include("header.ejs")%>
+<!--  -->
+<%- include("nav.ejs")%>
+<!--  -->
+<h2>This is Send Mail Page</h2>
+
+<form action="/forget/<%= id%>" method="POST">
+    <input type="number" name="token" placeholder="Otp here..." />
+    <input type="password" name="newpassword" placeholder="New Password" />
+    <button>Verify</button>
+</form>
+
+<!--  -->
+<%- include("footer.ejs")%>
