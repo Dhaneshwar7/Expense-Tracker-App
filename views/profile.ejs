@@ -6,6 +6,18 @@
 
 <a href="/createexpense">Add New Expense</a>
 <hr />
-<%= JSON.stringify(admin)%>
+<form action="/filter">
+    <select name="key" id="">
+        <option value="amount">Amount</option>
+        <option value="remark">Remark</option>
+        <option value="category">Category</option>
+        <option value="paymentmode">Payment Mode</option>
+        <option value="Date">Date</option>
+    </select>
+    <input type="text" name="value" placeholder="enter search term" />
+    <button>Filter</button>
+</form>
+<h1>Sum: <%= expenses.reduce((ac,cv) => ac+cv.amount, 0)%></h1>
+<%= JSON.stringify(expenses)%>
 <!--  -->
 <%- include("footer.ejs")%>

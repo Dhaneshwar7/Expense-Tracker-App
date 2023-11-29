@@ -8,6 +8,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 // passport.use(User.createStrategy());
 
 const { sendmail } = require("../utils/sendmail");
+const Expense = require("../models/expenseModel");
 
 router.get("/", function (req, res, next) {
     res.render("index", { admin: req.user });
@@ -81,9 +82,14 @@ router.post(
     function (req, res, next) {}
 );
 
-router.get("/profile", isLoggedIn, function (req, res, next) {
-    console.log(req.user);
-    res.render("profile", { admin: req.user });
+router.get("/profile", isLoggedIn, async function (req, res, next) {
+    try {
+        const { expenses } = await req.user.populate("expenses");
+        console.log(req.user, expenses);
+        res.render("profile", { admin: req.user, expenses });
+    } catch (error) {
+        res.send(error);
+    }
 });
 
 router.get("/reset", isLoggedIn, function (req, res, next) {
@@ -120,5 +126,41 @@ function isLoggedIn(req, res, next) {
 router.get("/createexpense", isLoggedIn, function (req, res, next) {
     res.render("createexpense", { admin: req.user });
 });
+
+router.post("/createexpense", isLoggedIn, async function (req, res, next) {
+    try {
+        const expense = new Expense(req.body);
+        req.user.expenses.push(expense._id);
+        expense.user = req.user._id;
+        await expense.save();
+        await req.user.save();
+        res.redirect("/profile");
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+router.get("/filter", async function (req, res, next) {
+    try {
+        let { expenses } = await req.user.populate("expenses");
+        expenses = expenses.filter((e) => e[req.query.key] == req.query.value);
+        res.render("profile", { admin: req.user, expenses });
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+});
+
+// router.get("/filter", isLoggedIn, async function (req, res, next) {
+//     try {
+//         let { expenses } = await req.user.populate("expenses");
+//         expenses = expenses.filter((f) => f[req.query.key] == req.query.value);
+//         console.log(expenses);
+//         res.render("profile", { admin: req.user, expenses });
+//     } catch (error) {
+//         console.log(error);
+//         res.send(error);
+//     }
+// });
 
 module.exports = router;

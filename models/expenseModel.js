@@ -7,7 +7,7 @@ const expenseModel = new mongoose.Schema(
         category: String,
         paymentmode: {
             type: String,
-            enum: ["cash", "online", "check"],
+            enum: ["cash", "online", "cheque"],
         },
         user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
     },
