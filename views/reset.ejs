@@ -1,11 +1,15 @@
-<%- include("header.ejs")%>
-<!--  -->
-<%- include("nav.ejs")%>
-<!--  -->
-<form action="/reset" method="POST">
-    <input type="password" name="oldpassword" placeholder="Old Password" />
-    <input type="password" name="newpassword" placeholder="New Password" />
-    <button>Reset</button>
-</form>
-<!--  -->
-<%- include("footer.ejs")%>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0 ,maximum-scale=1" />
+		<title>Reset</title>
+	</head>
+	<body>
+		<form action="/reset" method="POST">
+			<input type="password" name="oldpassword" placeholder="Old Password" />
+			<input type="password" name="newpassword" placeholder="New Password" />
+			<button>Reset</button>
+		</form>
+	</body>
+</html>

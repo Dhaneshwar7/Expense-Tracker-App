@@ -1,14 +1,67 @@
-<%- include("header.ejs")%>
-<!--  -->
-<%- include("nav.ejs")%>
-<!--  -->
-<h2>This is Send Mail Page</h2>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1"
+		/>
+		<title>Otp Check</title>
+		<link rel="stylesheet" href="../stylesheets/otp.css" />
+		<style>
+			body {
+				padding: 3vw 6vw;
+				overflow: hidden;
+				height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 
-<form action="/forget/<%= id%>" method="POST">
-    <input type="number" name="token" placeholder="Otp here..." />
-    <input type="password" name="newpassword" placeholder="New Password" />
-    <button>Verify</button>
-</form>
-
-<!--  -->
-<%- include("footer.ejs")%>
+			.form-container{
+					width: 100%;
+				}
+				form{
+					padding: 0 200px;
+				}
+			@media only screen and (max-width: 600px) {
+				.container{
+					min-height: 310px;
+					max-height: 310px;
+				}
+				.form-container{
+					height: 100%;
+				}
+				form{
+					padding: 0 20px;
+				}
+				button{
+					margin-top: 10px !important;
+				}
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container" id="container">
+			<div class="form-container sign-in-container">
+				<form action="/forget/<%= id %>" method="post">
+					<h1>Otp</h1>
+					<!-- <div class="social-container">
+						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+					</div>
+					<span>or use your account</span> -->
+					<input type="number" name="token" placeholder="Otp here..." />
+					<input
+						name="newpassword"
+						type="password"
+						placeholder="Enter Your New Password"
+					/>
+					<button style="margin-top: 50px">Change Password</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
