@@ -4,6 +4,8 @@ const User = require('../models/userModel');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
+
+
 passport.use(new LocalStrategy(User.authenticate()));
 // passport.use(User.createStrategy());
 

@@ -1,11 +1,15 @@
+@import url(../fonts/remixicon.css);
 :root {
-	--mainbg: #E3F4F4;
+	/* --mainbg: #e3f4f4; */
+	--mainbg: #DEDEF6;
+	--purplebg:#5955E7;
+	--graycolor:#333131;
 }
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-    font-family: gilroy;
+	font-family: gilroy;
 }
 html,
 body {
@@ -14,10 +18,9 @@ body {
 }
 a {
 	text-decoration: none;
-	/* color: black !important; */
 }
 i {
-	font-size: 32px;
+	font-size: 32px !important;
 }
 li {
 	list-style: none;
@@ -25,29 +28,54 @@ li {
 #main {
 	height: 100vh;
 	width: 100vw;
-	/* background-color: var(--mainbg); */
-    background:url(../images/moneymanagementpic.jpg);
-    background-position: center;
-    background-size: cover;
-
+	/* background-color: red; */
+	background: linear-gradient(90deg, rgba(201,200,219,1) 0%, rgba(164,201,255,1) 35%, rgba(160,199,213,1) 70%, rgba(212,248,255,1) 100%);
+	background-position: center;
+	background-size: cover;
 	display: flex;
 	flex-direction: row;
 	padding: 1rem;
 }
+/* ----------------- Illustration Container -----------  */
+/* ----------------- Illustration Container -----------  */
+.illustration-container {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	/* background-color: red; */
+	z-index: 5;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.illustration-container picture {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 70%;
+	width: 70%;
+}
+
+/* ----------------- Left Container -----------  */
+/* ----------------- Left Container -----------  */
 .left-container {
-    max-height: 100%;
+	max-height: 100%;
 	width: 20%;
 	/* background-color: rgb(122, 218, 165); */
+	z-index: 10;
 }
 .left-desktop {
 	padding: 1rem;
 }
 .logo {
 	display: flex;
-    padding: 0 1.5rem;
-    align-items: center;
-    justify-content: center;
-	background-color: gray;
+	padding: 0 1.5rem;
+	align-items: center;
+	justify-content: center;
+	/* background-color: gray; */
 }
 .logo-pic img {
 	width: 4vw;
@@ -62,24 +90,7 @@ li {
 .navigation {
 	padding: 100px 16px;
 }
-.selected-nav {
-	color: rgb(84, 86, 212);
-}
-.selected-nav a {
-	color: rgb(84, 86, 212);
-}
-.nav-ul li:hover {
-	color: rgb(84, 86, 212);
-}
-.nav-ul li a {
-	/* background-color: #fff; */
-	position: relative;
-}
-.nav-ul > li > a > span {
-	/* background-color: red; */
-	position: relative;
-	z-index: 2;
-}
+
 nav ul li a {
 	text-decoration: none;
 	font-size: 1.1rem;
@@ -95,8 +106,11 @@ nav ul li a {
 	font-family: roboto;
 	cursor: pointer;
 	white-space: nowrap;
-	color: inherit;
-	/* color: #9997CA; */
+	/* background-color: red; */
+	color: var(--graycolor);
+}
+nav ul li a:hover{
+	color: var(--purplebg);
 }
 nav ul li a i {
 	font-size: 32px;
@@ -105,20 +119,75 @@ nav ul li a i {
 nav ul li a span {
 	text-align: center;
 }
+.logout-btn{
+	margin-top: 150px;
+}
+/* ---------- Rollup Effects CSs -------- */
+.overflow-hidden {
+	overflow: hidden;
+	position: relative;
+	/* background-color: red; */
+	transform: translate(0, 0);
+	text-transform: capitalize;
+}
+.about{
+	font-size: 1.05rem;
+	font-weight: 600;
+}
+.overflow-vertical {
+	position: relative;
+	top: 0;
+	/* left: 0; */
+	transition: top 0.4s, transform 0.6s ease-in-out;
+	/* transform: translate3d(-7px, 37px, 0px) rotate(12deg); */
+}
+.overflow-txt.ot-abosolute {
+	position: absolute;
+	left: 0;
+	bottom: -1.5em;
+}
+[data-hover='btn']:hover .overflow-vertical {
+	top: -1.5em;
+}
+/* ----  */
+.oflow-txt.of-absolute {
+	position: absolute;
+	left: 0;
+	bottom: -1.5em;
+}
+.oflow-txt {
+	margin: 0;
+	display: inline-block;
+	height: fit-content;
+	width: fit-content;
+} 
+/* ---------- Rollup Effects CSs -------- */
+
+
+/* ----------------- Center Container -----------  */
+/* ----------------- Center Container -----------  */
 
 .center-container {
 	width: 60%;
 	border-radius: 50px;
-	background-color: #ececf267;
-    backdrop-filter: blur(5px);
-	filter: blur(0.5px);
+	background-color: #f4f4f452;
+	backdrop-filter: blur(3px);
+	/* filter: blur(0.5px); */
 	transition: all ease 0.5s;
+	z-index: 10;
+
 }
+
+/* ----------------- Right Container -----------  */
+/* ----------------- Right Container -----------  */
+
 .right-container {
 	width: 25%;
 	max-height: 100%;
 	transition: all ease 0.5s;
-    background-color: rgb(132, 140, 60);
+	/* background-color: rgb(132, 140, 60); */
+	z-index: 10;
+
 }
 .right-desktop {
 	padding: 1rem;
@@ -126,9 +195,9 @@ nav ul li a span {
 .right-top {
 	width: 100%;
 	height: fit-content;
-	background-color: aqua;
+	/* background-color: aqua; */
 	display: flex;
-    margin: auto;
+	margin: auto;
 	align-items: center;
 	justify-content: end;
 }
@@ -142,7 +211,7 @@ nav ul li a span {
 	justify-content: center;
 	gap: 15px;
 	padding: 0 1.5rem;
-	background-color: red;
+	/* background-color: red; */
 }
 .right-icons i {
 	cursor: pointer;
@@ -153,7 +222,7 @@ nav ul li a span {
 	/* width: fit-content; */
 	width: 45px;
 	height: 45px;
-	background-color: gold;
+	/* background-color: gold; */
 	overflow: hidden;
 	position: relative;
 	/* margin-right: 10px; */
@@ -192,10 +261,10 @@ nav ul li a span {
 	align-items: center;
 	justify-content: center;
 
-	background-color: rgb(198, 76, 209);
+	/* background-color: rgb(198, 76, 209); */
 }
 .profile-pic {
-	background-color: rgb(213, 148, 62);
+	/* background-color: rgb(213, 148, 62); */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -214,6 +283,7 @@ nav ul li a span {
 .profile-name {
 	font-weight: 600;
 	text-align: center;
+	text-transform: capitalize;
 }
 
 .total-expense {
@@ -221,7 +291,7 @@ nav ul li a span {
 	flex-wrap: wrap;
 	width: 100%;
 	/* flex-direction: row; */
-	background-color: red;
+	/* background-color: red; */
 	align-items: center;
 	justify-content: space-around;
 	padding: 20px 0;
@@ -264,9 +334,9 @@ nav ul li a span {
 	.right-desktop {
 		padding: 0rem;
 	}
-    .setting-btn{
-        display: none;
-    }
+	.setting-btn {
+		display: none;
+	}
 	.left-container {
 		width: 100%;
 		/* height: 20%; */
@@ -306,7 +376,7 @@ nav ul li a span {
 	.right-container {
 		width: 100%;
 		/* height: 10%; */
-        height: fit-content;
+		height: fit-content;
 		transition: all ease 0.5s;
 	}
 	.total-expense {
