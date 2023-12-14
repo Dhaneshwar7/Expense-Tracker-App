@@ -4,13 +4,12 @@ const User = require('../models/userModel');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
-
-
 passport.use(new LocalStrategy(User.authenticate()));
 // passport.use(User.createStrategy());
 
 const { sendmail } = require('../utils/sendmail');
 const Expense = require('../models/expenseModel');
+const Income = require("../models/incomeModel")
 
 /*  -------  Login and Signup  ----------------- */
 /*  -------  Login and Signup  ----------------- */
@@ -127,24 +126,52 @@ function isLoggedIn(req, res, next) {
 router.get('/dashboard', isLoggedIn, async function (req, res, next) {
 	try {
 		const { expenses } = await req.user.populate('expenses');
-		console.log(req.user, expenses);
-		res.render('dashboard', { admin: req.user, expenses });
+		const { income } = await req.user.populate('income');
+		console.log(req.user, expenses ,income);
+
+		res.render('dashboard', { admin: req.user, expenses, income});
 	} catch (error) {
 		res.send(error);
 	}
 });
+/* --------------- Add Expense -------------- */
+router.post('/addexpense', isLoggedIn, async function (req, res, next) {
+	try {
+		const expense = new Expense(req.body);
+		backURL = req.header('Referer') || '/';
+		req.user.expenses.push(expense._id);
+		expense.user = req.user._id;
+		await req.user.save();
+		await expense.save();
+		res.redirect('/dashboard');
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post('/addincome',isLoggedIn, async function(req,res,next){
+	try {
+		const incomeAdd = new Income(req.body);
+		req.user.income.push(incomeAdd._id);
+		incomeAdd.user = req.user._id;
+		await req.user.save();
+		await incomeAdd.save();
+		res.redirect("/dashboard");
+	} catch (error) {
+		console.log(error);
+	}
+})
+
 /* --------------- Other Pages -------------- */
-router.get('/wallet', function (req, res, next) {
+router.get('/wallet', isLoggedIn, function (req, res, next) {
 	res.render('wallet');
 });
 
-router.get('/transaction', function (req, res, next) {
+router.get('/transaction', isLoggedIn, function (req, res, next) {
 	res.render('transaction');
 });
-router.get('/profile', function (req, res, next) {
+router.get('/profile', isLoggedIn, function (req, res, next) {
 	res.render('profile');
 });
-
 
 router.get('/settings', function (req, res, next) {
 	res.render('settings');

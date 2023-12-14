@@ -11,6 +11,8 @@ const userModel = new mongoose.Schema(
             default: -1,
         },
         expenses: [{ type: mongoose.Schema.Types.ObjectId, ref: "expense" }],
+        income:[{type : mongoose.Schema.Types.ObjectId ,ref:"income"}]
+
     },
     { timestamps: true }
 );
