@@ -7,6 +7,10 @@
 	font-family: gilroy;
 	src: url(../fonts/Gilroy-Font/Radomir\ Tinkov\ -\ Gilroy-ExtraBold.otf);
 }
+@font-face {
+	font-family: gilroy;
+	src: url(../fonts/Gilroy-Font/Radomir\ Tinkov\ -\ Gilroy-Light.otf);
+}
 :root {
 	/* --mainbg: #e3f4f4; */
 	--mainLightBg: 90deg, rgba(201, 200, 219, 1) 0%, rgba(164, 201, 255, 1) 35%,
