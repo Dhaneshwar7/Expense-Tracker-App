@@ -26,7 +26,7 @@
 						<h1 class="logo-name">Mooney</h1>
 					</div>
 					<nav class="navigation">
-						<ul class="nav-ul">
+						<ul class="nav-ul nav-top-anchors">
 							<li>
 								<a href="/dashboard" class="about" data-hover="btn">
 									<i class="ri-home-7-fill"></i>
@@ -93,7 +93,7 @@
 								</a>
 							</li>
 						</ul>
-						<ul class="nav-ul logout-btn">
+						<ul class="nav-ul logout-btn nav-bottom-anchors">
 							<li class="darklightMode">
 								<a href="#" class="about" data-hover="btn">
 									<i class="ri-moon-clear-fill moon"></i>
@@ -277,7 +277,7 @@
 					<div class="left-head">
 						<h1 class="head-board-heading">My Expenses</h1>
 						<div class="remaining-exp"><%= income.reduce((accumulator,currentValue)=> accumulator+
-				currentValue.amount , 0) %></div>
+				currentValue.incomeAmount , 0) %></div>
 					</div>
 					<div class="right-head">
 						<div class="graph">graph</div>

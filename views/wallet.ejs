@@ -1,14 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>
-        Wallet
-    </h1>
-    
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"
+		/>
+		<title>Dashboard</title>
+		<link rel="stylesheet" href="../stylesheets/dashboard.css" />
+		<link rel="stylesheet" href="../stylesheets/wallet.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+        <main id="main">
+			<div id="cursor"></div>
+			<section class="overlay"></section>
+			<div class="illustration-container">
+				<picture>
+					<img src="./images/moneyimage1.webp" alt="" />
+				</picture>
+			</div>
+			<div class="left-container">
+				<div class="left-desktop">
+					<div class="logo">
+						<picture class="logo-pic" style="width: 100%; height: 100%">
+							<img src="../images/logo.webp" alt="" />
+						</picture>
+						<h1 class="logo-name">Mooney</h1>
+					</div>
+					<nav class="navigation">
+						<ul class="nav-ul nav-top-anchors">
+							<li>
+								<a href="/dashboard" class="about" data-hover="btn">
+									<i class="ri-home-7-fill"></i>
+									<div class="overflow-hidden">
+										<div class="overflow-vertical">
+											<div class="overflow-txt"><span>Dashboard</span></div>
+											<div class="overflow-txt ot-abosolute">
+												<span>Dashboard</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="/wallet" class="about" data-hover="btn">
+									<i class="ri-wallet-3-fill"></i>
+									<div class="overflow-hidden">
+										<div class="overflow-vertical">
+											<div class="overflow-txt"><span>Wallet</span></div>
+											<div class="overflow-txt ot-abosolute">
+												<span>Wallet</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="/transaction" class="about" data-hover="btn">
+									<i class="ri-bar-chart-fill"></i>
+									<div class="overflow-hidden">
+										<div class="overflow-vertical">
+											<div class="overflow-txt"><span>transaction</span></div>
+											<div class="overflow-txt ot-abosolute">
+												<span>transaction</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="/profile" class="about" data-hover="btn">
+									<i class="ri-user-2-fill"></i>
+									<div class="overflow-hidden">
+										<div class="overflow-vertical">
+											<div class="overflow-txt"><span>Profile</span></div>
+											<div class="overflow-txt ot-abosolute">
+												<span>Profile</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="/settings" class="about" data-hover="btn">
+									<i class="ri-settings-5-fill"></i>
+									<div class="overflow-hidden">
+										<div class="overflow-vertical">
+											<div class="overflow-txt"><span>Settings</span></div>
+											<div class="overflow-txt ot-abosolute">
+												<span>Settings</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+						<ul class="nav-ul logout-btn nav-bottom-anchors">
+							<li class="darklightMode">
+								<a href="#" class="about" data-hover="btn">
+									<i class="ri-moon-clear-fill moon"></i>
+									<i class="ri-sun-fill sun hide"></i>
+									<div class="overflow-hidden">
+										<div class="overflow-vertical">
+											<div class="overflow-txt">
+												<span class="dlmode">Dark Mode</span>
+											</div>
+											<div class="overflow-txt ot-abosolute">
+												<span class="dlmode">Dark Mode</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="/signout" class="about" data-hover="btn">
+									<i class="ri-logout-box-fill"></i>
+									<div class="overflow-hidden">
+										<div class="overflow-vertical">
+											<div class="overflow-txt"><span>Logout</span></div>
+											<div class="overflow-txt ot-abosolute">
+												<span>Logout</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="center-container">
+				<div class="search-container">
+					<div class="input-box">
+						<i class="uil uil-search"></i>
+						<input
+							type="text"
+							id="search-input"
+							oninput="SetDefault($(this).val());"
+							placeholder="Search here..."
+						/>
+						<button class="button">Search</button>
+					</div>
+
+					<!-- Render a SERVER EXPENSE DATA from Server/Database and hidden inside the Template Tag from here we send Data to our Javascript file -->
+					<% expenses.forEach(e=>{ %>
+					<template data-expense-rec>
+						<div data-search-show-rec>
+							<span class="e-icon"><i class="ri-oil-line"></i> </span>
+							<div class="e-details-container">
+								<span class="e-details">
+									<div class="exp-category" data-category-rec>
+										<%= e.category %>
+									</div>
+									<div class="exp-payment" data-paymentMode-rec>
+										<%= e.paymentmode %>
+									</div>
+									<div class="exp-remark" data-remark-rec><%= e.remark %></div>
+									<div class="exp-user" data-user-rec><%= e.user %></div>
+									<div class="exp-id" data-id-rec><%= e._id %></div>
+									<div class="exp-date" data-date-rec><%= e.createdAt %></div>
+									<div class="exp-amount" data-amount-rec><%= e.amount %></div>
+								</span>
+								<span class="e-amount">
+									<i class="ri-money-rupee-circle-line"></i>
+									<div class="exp-amount" data-amount-rec></div>
+								</span>
+							</div>
+							<a href="">View</a>
+						</div>
+					</template>
+					<% }) %>
+
+					<!-- This is BLANK CONTAINER where we are going to show data by SEARCH BAR MANIPULATION -->
+					<div class="search-showing notvisible" data-expense-container></div>
+					<!-- from JavaScript Data which have collect from SERVER EXPENSE DATA now that we are using here and show it to BLANK CONTAINER -->
+					<template data-expense-template>
+						<li data-search-show>
+							<span class="e-icon"><i class="ri-oil-line"></i> </span>
+							<div class="e-details-container">
+								<span class="e-details">
+									<div class="exp-category" data-category></div>
+									<div class="exp-remark" data-remark></div>
+									<div class="exp-payment" data-paymentMode></div>
+									<div class="exp-date" data-date></div>
+									<div class="exp-user" data-user></div>
+									<div class="exp-id" data-id></div>
+								</span>
+								<span class="e-amount">
+									<i class="ri-money-rupee-circle-line"></i>
+									<div class="exp-amount" data-amount></div>
+								</span>
+							</div>
+							<a href="">View</a>
+						</li>
+					</template>
+				</div>
+				<div class="head-board dfacjsb">
+					<div class="left-head wallet-head">
+						<div class="wallet-icon">
+							<img src="./wallet.png" alt="" />
+						</div>
+						<div class="wallet-title">
+							<h1>Wallet</h1>
+							<p>Change default Wallet</p>
+						</div>
+					</div>
+					<div class="right-head wallet-head">
+						<form action="#calendar" id="wallet-calendar">
+							<input type="month" name="walletmonth" min="2021-01" max="2025-01" value="2023-12" id="month-input" onchange="selectCalendarDate()"/>
+							<!-- <button  style="opacity: 0;"></button> -->
+						</form>
+	
+
+					</div>
+				</div>
+				<div class="wallet-record">
+					<div class="wlr-left">
+						<div class="wallet-top">
+							<div class="wallet-card">
+								<div class="wallet-icon">
+
+								</div>
+								<h2>4500</h2>
+								<p>Expenses</p>
+							</div>
+							<div class="wallet-card">
+								<div class="wallet-icon"></div>
+								<h2>4500</h2>
+								<p>Expenses</p>
+							</div>
+							<div class="wallet-card">
+								<div class="wallet-icon"></div>
+								<h2>4500</h2>
+								<p>Expenses</p>
+							</div>
+						</div>
+						<div class="wallet-bottom">
+
+						</div>
+
+					</div>
+					<div class="wlr-right">
+						<h1>Budget</h1>
+						<div class="doughnut"></div>
+						<div class="wallet-total">
+							<span>
+								<h2>$35000</h2>
+								<p>Monthly limit</p>
+							</span>
+							<span>
+								<h2>$3000</h2>
+								<p>Remaining</p>
+							</span>
+						</div>
+
+					</div>
+				</div>
+				<div class="big-expense">
+					<h1>Categories with Biggest Expense</h1>
+					<div class="b-cards">
+						<div class="expense-card">
+							<div class="exp-i"><i class="ri-store-2-line"></i></div>
+							<h3>Shopping Cart</h3>
+							<h4>$1200</h4>
+						</div>
+						<div class="expense-card">
+							<div class="exp-i"><i class="ri-store-2-line"></i></div>
+							<h3>Shopping Cart</h3>
+							<h4>$1200</h4>
+						</div>
+						<div class="expense-card">
+							<div class="exp-i"><i class="ri-store-2-line"></i></div>
+							<h3>Shopping Cart</h3>
+							<h4>$1200</h4>
+						</div>
+						<div class="expense-card">
+							<div class="exp-i"><i class="ri-store-2-line"></i></div>
+							<h3>Shopping Cart</h3>
+							<h4>$1200</h4>
+						</div>
+						<div class="expense-card">
+							<div class="exp-i"><i class="ri-store-2-line"></i></div>
+							<h3>Shopping Cart</h3>
+							<h4>$1200</h4>
+						</div><div class="expense-card">
+							<div class="exp-i"><i class="ri-store-2-line"></i></div>
+							<h3>Shopping Cart</h3>
+							<h4>$1200</h4>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="right-container">
+				<div class="right-desktop">
+					<div class="right-top">
+						<div class="right-icons">
+							<div class="setting-btn">
+								<i class="ri-settings-5-fill menuBtn"></i>
+							</div>
+							<div class="close-menu">
+								<div class="open-btn obb">
+									<i class="ri-menu-3-line menuBtn"></i>
+								</div>
+								<div class="close-btn obb">
+									<i class="ri-close-fill menuBtn"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="profile-container">
+						<div class="profile-pic">
+							<div class="dp"></div>
+
+							<div class="profile-name"><%= admin.username %></div>
+						</div>
+						<ul class="total-expense">
+							<li>
+								<i class="ri-calendar-close-line"></i>
+								<span>Top Up</span>
+							</li>
+							<li>
+								<i class="ri-calendar-close-line"></i>
+								<span>Pay</span>
+							</li>
+							<li>
+								<i class="ri-calendar-close-line"></i>
+								<span>Send</span>
+							</li>
+							<li>
+								<i class="ri-add-circle-fill"></i>
+								<span>Add</span>
+							</li>
+						</ul>
+						<div class="recent-transaction">
+							<div class="recent-title"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<script src="../javascripts/dashboard.js"></script>
+	</body>
 </html>

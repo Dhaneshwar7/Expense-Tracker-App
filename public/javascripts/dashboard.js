@@ -41,12 +41,15 @@ function mobileMenuClickBtn() {
 }
 function dyanamicResponsive() {
 	var widthh = window.innerWidth;
+	var height = window.innerHeight;
 	window.addEventListener('resize', function () {
 		if (window.innerWidth !== widthh) {
 			window.location.reload(true);
 		}
 	});
-	// console.log(widthh);
+
+	console.log(widthh);
+	console.log(height);
 
 	if (widthh >= 0 && widthh <= 375) {
 		// Code to execute when yourValue is between 0 and 400
@@ -307,4 +310,24 @@ function submitExpense() {
 
 	// Show success message
 	document.getElementById('expenseForm').classList.add('form-submitted');
+}
+
+
+
+
+
+
+
+function selectCalendarDate() {
+	var received_date = document.getElementById('month-input').value;
+	console.log(received_date);
+
+	// var split_dashes = received_date.split('-');
+
+	// var final_date =
+	// 	split_dashes[2] + '.' + split_dashes[1] + '.' + split_dashes[0];
+
+	// document.getElementById('show_date').value = final_date;
+
+	document.getElementById('wallet-calendar').submit();
 }
