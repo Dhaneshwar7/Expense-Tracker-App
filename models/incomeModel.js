@@ -4,10 +4,7 @@ const incomeModel = new mongoose.Schema(
 	{
 		incomeAmount: {
 			type: Number,
-			required: true,
-		},
-		incomeMonth: { 
-			type: String,
+			default:0,
 			required: true,
 		},
 		currency: {
@@ -20,7 +17,6 @@ const incomeModel = new mongoose.Schema(
 		},
 		date: {
 			type: Date,
-			required: true,
 		},
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
 	},

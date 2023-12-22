@@ -128,6 +128,8 @@
 				</div>
 			</div>
 			<div class="center-container">
+				<section class="overlay"></section>
+				
 				<!-- Search Bar with Data filter Manipulation -->
 				<div class="search-container">
 					<div class="input-box">
@@ -195,7 +197,7 @@
 					</template>
 				</div>
 				<!-- --- Heading Board Where we can se Total Remaining Expense heading --- -->
-				<div class="head-board dfacjsb">
+				<div class="head-board hd-pd dfacjsb">
 					<!-- ---- Head Overlay Add Expense/Money --- -->
 					<!-- ---- Head Overlay Add Expense/Money --- -->
 					<div class="head-overlay">
@@ -203,7 +205,7 @@
 							<i class="ri-add-fill"></i>
 						</div>
 						<div class="expense-form" id="expenseForm">
-							<form action="/addexpense" method="post">
+							<form class="addExpenseForm"  action="/addexpense" method="post">
 								<h2>Add Your Expense</h2>
 								<div class="expFormbox required">
 									<label for="amount">Amount:</label>
@@ -268,6 +270,53 @@
 
 								<div class="success-message">Expense added successfully!</div>
 							</form>
+								<form class="addIncomeForm" action="/addincome" method="post">
+								<h2>Add Income</h2>
+								<div class="expFormbox required">
+									<label for="expenseName" class="required"
+										>Income Amount</label
+									>
+									<input
+										type="number"
+										id="expenseName"
+										placeholder="Enter Amount of Your Income..."
+										required
+										name="incomeAmount"
+									/>
+								</div>
+								<div class="expFormbox required">
+									<label for="expenseName" class="required"
+										>Description</label
+									>
+									<input
+										type="text"
+										id="expenseName"
+										placeholder="Write about income ..."
+										required
+										name="description"
+									/>
+								</div>
+								<div class="expFormbox required">
+									<label for="category">Currency</label>
+									<select name="currency" id="category" required>
+										<option value="" disabled selected>Select Currency</option>
+										<option value="inr">INR</option>
+										<option value="usd">USD</option>
+										<option value="yen">YEN</option>
+										<!-- Add more categories as needed -->
+									</select>
+								</div>
+								<div class="expFormbox">
+									<label for="date">Date:(Optional)</label>
+									<input style="margin-right: 5px" type="date" id="datetime" />
+								</div>
+
+								<button class="addExpenseFormBtn" onclick="submitExpense()">
+									Add Income
+								</button>
+
+								<div class="success-message">Income Added Successfully!</div>
+							</form>
 						</div>
 					</div>
 					<!-- ---- Head Overlay Add Expense/Money --- -->
@@ -309,6 +358,58 @@
 					<!-- left and right side which stabel -->
 				</div>
 				<!-- --- Heading Board Where we can se Total Remaining Expense heading --- -->
+
+				<div class="financial-record">
+					<div class="fin-box">
+						<div class="fin-title">
+							<span>Total Income</span>
+							<i class="ri-more-2-line"></i>
+						</div>
+						<!-- <div class="fin-graph">
+							<h1>graph</h1>
+						</div> -->
+						<div class="fin-value">
+							<span>$85000</span>
+							<span
+								><i class="ri-arrow-up-line"></i>
+								<h4>14%</h4></span
+							>
+						</div>
+					</div>
+					<div class="fin-box">
+						<div class="fin-title">
+							<span>Total Expense</span>
+							<i class="ri-more-2-line"></i>
+						</div>
+						<!-- <div class="fin-graph">
+							<h1>graph</h1>
+						</div> -->
+						<div class="fin-value">
+							<span>$85000</span>
+							<span
+								><i class="ri-arrow-up-line"></i>
+								<h4>14%</h4></span
+							>
+						</div>
+					</div>
+					<div class="fin-box">
+						<div class="fin-title">
+							<span>Total Saving</span>
+							<i class="ri-more-2-line"></i>
+						</div>
+						<!-- <div class="fin-graph">
+							<h1>graph</h1>
+						</div> -->
+						<div class="fin-value">
+							<span>$85000</span>
+							<span
+								><i class="ri-arrow-up-line"></i>
+								<h4>14%</h4></span
+							>
+						</div>
+					</div>
+				</div>
+
 				<%= expenses.reduce((accumulator,currentValue)=> accumulator+
 				currentValue.amount , 0) %>
 

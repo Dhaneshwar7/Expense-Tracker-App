@@ -3,13 +3,14 @@ var router = express.Router();
 const User = require('../models/userModel');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const moment = require('moment');
 
 passport.use(new LocalStrategy(User.authenticate()));
 // passport.use(User.createStrategy());
 
 const { sendmail } = require('../utils/sendmail');
 const Expense = require('../models/expenseModel');
-const Income = require("../models/incomeModel")
+const Income = require('../models/incomeModel');
 
 /*  -------  Login and Signup  ----------------- */
 /*  -------  Login and Signup  ----------------- */
@@ -127,9 +128,9 @@ router.get('/dashboard', isLoggedIn, async function (req, res, next) {
 	try {
 		const { expenses } = await req.user.populate('expenses');
 		const { income } = await req.user.populate('income');
-		console.log(req.user, expenses ,income);
+		console.log(req.user, expenses, income);
 
-		res.render('dashboard', { admin: req.user, expenses, income});
+		res.render('dashboard', { admin: req.user, expenses, income });
 	} catch (error) {
 		res.send(error);
 	}
@@ -148,18 +149,18 @@ router.post('/addexpense', isLoggedIn, async function (req, res, next) {
 		console.log(error);
 	}
 });
-router.post('/addincome',isLoggedIn, async function(req,res,next){
+router.post('/addincome', isLoggedIn, async function (req, res, next) {
 	try {
 		const incomeAdd = new Income(req.body);
 		req.user.income.push(incomeAdd._id);
 		incomeAdd.user = req.user._id;
 		await req.user.save();
 		await incomeAdd.save();
-		res.redirect("/dashboard");
+		res.redirect('/dashboard');
 	} catch (error) {
 		console.log(error);
 	}
-})
+});
 
 /* --------------- Other Pages -------------- */
 router.get('/wallet', isLoggedIn, async function (req, res, next) {
@@ -167,8 +168,41 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 		const { expenses } = await req.user.populate('expenses');
 		const { income } = await req.user.populate('income');
 		console.log(req.user, expenses, income);
-
-		res.render('wallet', { admin: req.user, expenses, income });
+		const currentTime = {
+			fullDate: moment().format('MMMM MM DD YY'),
+			fullMonth: moment().format('MMMM'),
+			fullYear: moment().format('YYYY'),
+			currDay: moment().format('DD'),
+			currMonth: moment().format('MM'),
+			currYear: moment().format('YY'),
+			wallcal: moment().format('YYYY-MM'),
+		};
+		console.log(currentTime);
+		res.render('wallet', {
+			admin: req.user,
+			expenses,
+			income,
+			currentTime,
+		});
+	} catch (error) {
+		res.send(error);
+	}
+});
+router.post('/search-calendar', isLoggedIn, async function (req, res, next) {
+	try {
+		const { expenses } = await req.user.populate('expenses');
+		const { income } = await req.user.populate('income');
+		const currentTime = {
+			wallcal: req.body.walletmonth,
+		};
+		const [selYear, selMonth] = req.body.walletmonth.split('-');
+		console.log(income);
+		res.render('wallet', {
+			admin: req.user,
+			expenses,
+			income,
+			currentTime,
+		});
 	} catch (error) {
 		res.send(error);
 	}

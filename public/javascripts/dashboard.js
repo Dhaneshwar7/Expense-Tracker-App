@@ -1,4 +1,6 @@
+
 // ---------------- Responsive Code ----------
+
 function desktopMenuClickBtn() {
 	$(document).ready(function () {
 		let flag = 0;
@@ -77,7 +79,6 @@ dyanamicResponsive();
 DarkLightMode();
 headOverlayOpenClose();
 
-
 /*----Server Data Collect usign Template and store into in Array now ----*/
 const importContentFromEjs = document.querySelectorAll(
 	'[data-search-show-rec]'
@@ -120,7 +121,7 @@ importExpTemplate.forEach(elem => {
 	};
 	newCollectDataArray.push(newCollectedDatafromEjs);
 });
-console.log(newCollectDataArray);
+// console.log(newCollectDataArray);
 
 /*---- Code For Search Box Visiblity below Search bar  ----*/
 const expenseContainer = document.querySelector('[data-expense-container]');
@@ -149,7 +150,7 @@ newSortExpList = newCollectDataArray.map(function (expData) {
 	const expUserValue = expCard.querySelector('[data-user]');
 	const expIdValue = expCard.querySelector('[data-id]');
 	const expDateValue = expCard.querySelector('[data-date]');
-	function unWantedDataHidden(){
+	function unWantedDataHidden() {
 		expUserValue.classList.add('hide');
 		expIdValue.classList.add('hide');
 	}
@@ -161,7 +162,7 @@ newSortExpList = newCollectDataArray.map(function (expData) {
 	expIdValue.textContent = expData.eId;
 	let setDate = new Date(expData.eDate);
 	expDateValue.textContent = setDate.toLocaleString();
-	console.log(new Date(expData.eDate));
+	// console.log(new Date(expData.eDate));
 	expenseContainer.append(expCard);
 	unWantedDataHidden();
 	return {
@@ -210,8 +211,6 @@ function myExperiment() {
 		});
 	}
 }
-
-
 
 /*  ------- DARK & LIGHT MODE ------- */
 function DarkLightMode() {
@@ -268,11 +267,13 @@ function headOverlayOpenClose() {
 			$('.head-overlay').css('opacity', '1');
 			$('.head-overlay').css('pointer-events', 'all');
 			$('.head-overlay').css('height', '70vh');
+			$('.overlay').css('scale', '1');
 		}
 		function overlayClose() {
 			$('.head-overlay').css('height', '0vh');
 			$('.head-overlay').css('opacity', '0');
 			$('.head-overlay').css('pointer-events', 'none');
+			$('.overlay').css('scale', '0');
 		}
 		// let flag = 0;
 		$('.add-expenseBtn ,.add-incomeBtn').click(() => {
@@ -281,12 +282,16 @@ function headOverlayOpenClose() {
 		$('.head-close').click(() => {
 			overlayClose();
 		});
+		$('.add-expenseBtn').click(() => {
+			$('.addIncomeForm').removeClass('formShow');
+			$('.addExpenseForm').addClass('formShow');
+		});
+		$('.add-incomeBtn').click(() => {
+			$('.addIncomeForm').addClass('formShow');
+			$('.addExpenseForm').removeClass('formShow');
+		});
 	});
 }
-
-
-
-
 
 /* Add Expense / MOney form Submit function */
 function submitExpense() {
@@ -311,12 +316,6 @@ function submitExpense() {
 	// Show success message
 	document.getElementById('expenseForm').classList.add('form-submitted');
 }
-
-
-
-
-
-
 
 function selectCalendarDate() {
 	var received_date = document.getElementById('month-input').value;

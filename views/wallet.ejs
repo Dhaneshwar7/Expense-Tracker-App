@@ -12,7 +12,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	</head>
 	<body>
-        <main id="main">
+		<main id="main">
 			<div id="cursor"></div>
 			<section class="overlay"></section>
 			<div class="illustration-container">
@@ -196,7 +196,7 @@
 						</li>
 					</template>
 				</div>
-				<div class="head-board dfacjsb">
+				<div class="head-board wl-pd dfacjsb">
 					<div class="left-head wallet-head">
 						<div class="wallet-icon">
 							<img src="./wallet.png" alt="" />
@@ -207,21 +207,25 @@
 						</div>
 					</div>
 					<div class="right-head wallet-head">
-						<form action="#calendar" id="wallet-calendar">
-							<input type="month" name="walletmonth" min="2021-01" max="2025-01" value="2023-12" id="month-input" onchange="selectCalendarDate()"/>
+						<form action="/search-calendar" id="wallet-calendar" method="post">
+							<input
+								type="month"
+								name="walletmonth"
+								min="2021-01"
+								max="2025-01"
+								value="<%= currentTime.wallcal %>"
+								id="month-input"
+								onchange="selectCalendarDate()"
+							/>
 							<!-- <button  style="opacity: 0;"></button> -->
 						</form>
-	
-
 					</div>
 				</div>
 				<div class="wallet-record">
 					<div class="wlr-left">
 						<div class="wallet-top">
 							<div class="wallet-card">
-								<div class="wallet-icon">
-
-								</div>
+								<div class="wallet-icon"></div>
 								<h2>4500</h2>
 								<p>Expenses</p>
 							</div>
@@ -236,29 +240,28 @@
 								<p>Expenses</p>
 							</div>
 						</div>
-						<div class="wallet-bottom">
-
-						</div>
-
+						<div class="wallet-bottom"></div>
 					</div>
 					<div class="wlr-right">
 						<h1>Budget</h1>
 						<div class="doughnut"></div>
 						<div class="wallet-total">
 							<span>
-								<h2>$35000</h2>
+								<h2 class="currency"><%= income.reduce((accumulator,currentValue)=> accumulator+
+				currentValue.incomeAmount , 0) %>
+								</h2>
 								<p>Monthly limit</p>
 							</span>
 							<span>
-								<h2>$3000</h2>
+								<h2 class="currency"><%= expenses.reduce((accumulator,currentValue)=> accumulator+
+				currentValue.amount , 0) %></h2>
 								<p>Remaining</p>
 							</span>
 						</div>
-
 					</div>
 				</div>
 				<div class="big-expense">
-					<h1>Categories with Biggest Expense</h1>
+					<h1 class="wl-pd">Categories with Biggest Expense</h1>
 					<div class="b-cards">
 						<div class="expense-card">
 							<div class="exp-i"><i class="ri-store-2-line"></i></div>
@@ -284,12 +287,12 @@
 							<div class="exp-i"><i class="ri-store-2-line"></i></div>
 							<h3>Shopping Cart</h3>
 							<h4>$1200</h4>
-						</div><div class="expense-card">
+						</div>
+						<div class="expense-card">
 							<div class="exp-i"><i class="ri-store-2-line"></i></div>
 							<h3>Shopping Cart</h3>
 							<h4>$1200</h4>
 						</div>
-						
 					</div>
 				</div>
 			</div>
