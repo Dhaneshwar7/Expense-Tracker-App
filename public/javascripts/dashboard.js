@@ -1,4 +1,3 @@
-
 // ---------------- Responsive Code ----------
 
 function desktopMenuClickBtn() {
@@ -65,6 +64,7 @@ function dyanamicResponsive() {
 	} else if (widthh >= 601 && widthh <= 767) {
 		/* Media Query for low resolution  Tablets, Ipads */
 		// console.log('Media Query for low resolution  Tablets, Ipads');
+		desktopMenuClickBtn();
 	} else if (widthh >= 768 && widthh <= 1023) {
 		/* Media Query for Tablets Ipads portrait mode */
 		// console.log('Media Query for Tablets Ipads portrait mode ');
@@ -211,7 +211,6 @@ function myExperiment() {
 	}
 }
 
-
 /* ------ Expense overaly Container Click ----- */
 function headOverlayOpenClose() {
 	$(document).ready(function () {
@@ -247,15 +246,41 @@ function headOverlayOpenClose() {
 
 /* Add Expense / MOney form Submit function */
 function submitExpense() {
-	const expNameInput = $('.expenseNameInput').val();
+	const expNumInput = $('.expenseNumInput').val().trim();
+	const expNameInput = $('.expenseNameInput').val().trim();
+	const expCatInput = $('.expenseCatInput').val();
+	const expPaymentInput = $('#paymentMethod').val();
+	const addIncomeInput = $('.addIncomeInput').val();
+	const addIncomeDescInput = $('.addIncomeDescInput').val().trim();
+	const addIncomeCurrencyInput = $('.addIncomeCurrencyInput').val();
 	console.log(expNameInput);
-	if(expNameInput.trim()===''){
+	console.log(expNumInput);
+	// console.log(expCatInput);
+	// console.log(expPaymentInput);
+	// if (
+	// 	expNameInput === '' &&
+	// 	expNumInput === '' &&
+	// 	expCatInput === null &&
+	// 	expPaymentInput === null
+	// ) {
+	// 	$('.detailsfill-message').addClass('formMsg-show');
+	// } else {
+	// 	$('.detailsfill-message').removeClass('formMsg-show');
+	// 	$('.success-message').addClass('formMsg-show');
+	// }
+	if (
+		(addIncomeInput === '' ||
+			addIncomeDescInput === '' ||
+			addIncomeCurrencyInput === null) &&
+		(expNameInput === '' ||
+			expNumInput === '' ||
+			expCatInput === null ||
+			expPaymentInput === null)
+	) {
 		$('.detailsfill-message').addClass('formMsg-show');
-	}
-	else{
+	} else {
 		$('.detailsfill-message').removeClass('formMsg-show');
 		$('.success-message').addClass('formMsg-show');
-
 	}
 
 	// document.getElementById('expenseForm').classList.add('form-submitted');
@@ -274,31 +299,3 @@ function selectCalendarDate() {
 
 	document.getElementById('wallet-calendar').submit();
 }
-
-
-
-// On page load set the theme.
-// (function() {
-//   let onpageLoad = localStorage.getItem('theme') || '';
-// 	let onp = localStorage.getItem('font') || '';
-//   let element = document.body;
-//   console.log(onp);
-//   console.log(onpageLoad);
-//   element.classList.add(onpageLoad);
-//   document.getElementById("theme").textContent =
-//     localStorage.getItem("theme") || "light";
-// })();
-
-// function themeToggle() {
-//   let element = document.body;
-//   element.classList.toggle("dark-mode");
-
-//   let theme = localStorage.getItem("theme");
-//   if (theme && theme === "dark-mode") {
-//     localStorage.setItem("theme", "");
-//   } else {
-//     localStorage.setItem("theme", "dark-mode");
-//   }
-
-//   document.getElementById("theme").textContent = localStorage.getItem("theme");
-// }

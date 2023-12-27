@@ -105,6 +105,7 @@
 										type="number"
 										id="amount"
 										name="amount"
+										class="expenseNameInput"
 										placeholder="Enter Amount in Rupees ..."
 										required
 									/>
@@ -115,6 +116,7 @@
 									>
 									<input
 										type="text"
+										class="expenseNumInput"
 										name="remark"
 										id="expenseName"
 										placeholder="Type Expense Name here ..."
@@ -124,7 +126,7 @@
 
 								<div class="expFormbox required">
 									<label for="category">Category:</label>
-									<select name="category" id="category" required>
+									<select name="category" class="expenseCatInput" id="category" required>
 										<option value="" disabled selected>Select category</option>
 										<option value="Food">Food</option>
 										<option value="Housing">Home</option>
@@ -171,7 +173,7 @@
 									<input
 										type="number"
 										id="expenseName"
-										class="expenseNameInput"
+										class="addIncomeInput"
 										placeholder="Enter Amount of Your Income..."
 										required
 										name="incomeAmount"
@@ -182,6 +184,7 @@
 									<input
 										type="text"
 										id="expenseName"
+										class="addIncomeDescInput"
 										placeholder="Write about income ..."
 										required
 										name="description"
@@ -189,7 +192,7 @@
 								</div>
 								<div class="expFormbox required">
 									<label for="category">Currency</label>
-									<select name="currency" id="category" required>
+									<select name="currency" class="addIncomeCurrencyInput" id="category" required>
 										<option value="" disabled selected>Select Currency</option>
 										<option value="inr">INR</option>
 										<option value="usd">USD</option>

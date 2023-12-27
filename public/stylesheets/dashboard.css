@@ -288,7 +288,7 @@ nav ul li a span {
 	transform: translateY(-50%);
 }
 ::placeholder {
-	color: var(--graycolor);
+	color: var(--fontBlack);
 	opacity: 1; /* Firefox */
 }
 .input-box i {
@@ -485,7 +485,7 @@ nav ul li a span {
 	padding: 25 px;
 	opacity: 0;
 	pointer-events: all;
-	transition: opacity 1s ease, height 1s ease-out;
+	transition: opacity .5s ease, height .3s ease-out;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 .head-close {
@@ -497,6 +497,7 @@ nav ul li a span {
 	border-radius: 50%;
 	transform: rotate(45deg);
 	transition: all 0.7s ease;
+	cursor: pointer;
 }
 .head-close i {
 	color: var(--darkWhite);
@@ -516,6 +517,7 @@ nav ul li a span {
 	flex-direction: column;
 	align-items: center;
 }
+
 .addExpenseForm,
 .addIncomeForm {
 	display: none;
