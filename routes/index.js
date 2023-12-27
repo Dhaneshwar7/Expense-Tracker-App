@@ -208,8 +208,16 @@ router.post('/search-calendar', isLoggedIn, async function (req, res, next) {
 	}
 });
 
-router.get('/transaction', isLoggedIn, function (req, res, next) {
-	res.render('transaction');
+router.get('/transaction', isLoggedIn, async function (req, res, next) {
+	try {
+		const { expenses } = await req.user.populate('expenses');
+		const { income } = await req.user.populate('income');
+		console.log(req.user, expenses, income);
+
+		res.render('transaction', { admin: req.user, expenses, income });
+	} catch (error) {
+		res.send(error);
+	}
 });
 router.get('/profile', isLoggedIn, function (req, res, next) {
 	res.render('profile');

@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"
-		/>
-		<title>Dashboard</title>
-		<link rel="stylesheet" href="../stylesheets/dashboard.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	</head>
-	<body>
-		<main id="main">
-			<!--  ----Main Background Code ----- -->
-			<%- include('partials/MainBackground.ejs') %>
-
-			<!--  ---- Left Container Code ----- -->
-			<%- include('partials/LeftContainer.ejs') %>
-
-			<!--  ----Center Container Code ----- -->
-			<div class="center-container">
+<div class="center-container">
 				<section class="overlay"></section>
 
 				<!-- Search Bar with Data filter Manipulation -->
@@ -339,13 +318,3 @@
 					<button>add money</button>
 				</form>
 			</div>
-			<!--  ----Center Container Code ----- -->
-
-			<!--  ----Right Container Code ----- -->
-			<%- include('partials/RightContainer.ejs') %>
-			<!--  ----Right Container Code ----- -->
-		</main>
-		<script src="../javascripts/dashboard.js"></script>
-		<script src="../javascripts/lightdarkmode.js"></script>
-	</body>
-</html>

@@ -76,7 +76,6 @@ function dyanamicResponsive() {
 	}
 }
 dyanamicResponsive();
-DarkLightMode();
 headOverlayOpenClose();
 
 /*----Server Data Collect usign Template and store into in Array now ----*/
@@ -212,53 +211,6 @@ function myExperiment() {
 	}
 }
 
-/*  ------- DARK & LIGHT MODE ------- */
-function DarkLightMode() {
-	$(document).ready(function () {
-		function DarkMode() {
-			$('.sun').removeClass('hide');
-			$('.moon').addClass('hide');
-			$('.dlmode').html('Light Mode');
-			$(':root').css('--darkWhite', '#0d0d0d');
-			$(':root').css('--darkGray', '#f5f5f5');
-			$(':root').css('--graycolor', '#f5f5f5');
-			$(':root').css('--purplebg', '#f5f5f5');
-			$(':root').css('--purpno', '#3a36c3');
-			$(':root').css('--whiteBg', '#35353ad8');
-			$(':root').css(
-				'--mainLightBg',
-				'112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%'
-			);
-		}
-		function LighMode() {
-			$('.sun').addClass('hide');
-			$('.moon').removeClass('hide');
-			$('.dlmode').html('Dark Mode');
-			$(':root').css('--darkWhite', '#f5f5f5');
-			$(':root').css('--darkGray', '#0d0d0d');
-			$(':root').css('--purplebg', '#5955e7');
-			$(':root').css('--purpno', 'transparent');
-			$(':root').css('--whiteBg', 'rgba(255, 255, 255, 0.84)');
-			$(':root').css(
-				'--mainLightBg',
-				`90deg, rgba(201, 200, 219, 1) 0%, rgba(164, 201, 255, 1) 35% ,
-		rgba(160, 199, 213, 1) 70%, rgba(212, 248, 255, 1) 100%`
-			);
-			$(':root').css('--graycolor', '#333131');
-		}
-		let flag = 0;
-		$('.darklightMode').click(function () {
-			if (flag === 0) {
-				console.log('true');
-				DarkMode();
-				flag = 1;
-			} else {
-				LighMode();
-				flag = 0;
-			}
-		});
-	});
-}
 
 /* ------ Expense overaly Container Click ----- */
 function headOverlayOpenClose() {
@@ -295,26 +247,18 @@ function headOverlayOpenClose() {
 
 /* Add Expense / MOney form Submit function */
 function submitExpense() {
-	// Fetch values from the form
-	const expenseName = document.getElementById('expenseName').value;
-	const amount = document.getElementById('amount').value;
-	const category = document.getElementById('category').value;
-	const date = document.getElementById('datetime').value;
-	const paymentMethod = document.getElementById('paymentMethod').value;
+	const expNameInput = $('.expenseNameInput').val();
+	console.log(expNameInput);
+	if(expNameInput.trim()===''){
+		$('.detailsfill-message').addClass('formMsg-show');
+	}
+	else{
+		$('.detailsfill-message').removeClass('formMsg-show');
+		$('.success-message').addClass('formMsg-show');
 
-	// You can perform further actions with the collected data, such as sending it to the server or storing it locally.
-	// For now, let's log the values to the console.
-	console.log('Expense Name:', expenseName);
-	console.log('Amount:', amount);
-	console.log('Category:', category);
-	console.log('Date:', date);
-	console.log('Payment Method:', paymentMethod);
+	}
 
-	// Optional: You can reset the form after submission
-	// document.getElementById('expenseForm').reset();
-
-	// Show success message
-	document.getElementById('expenseForm').classList.add('form-submitted');
+	// document.getElementById('expenseForm').classList.add('form-submitted');
 }
 
 function selectCalendarDate() {
@@ -330,3 +274,31 @@ function selectCalendarDate() {
 
 	document.getElementById('wallet-calendar').submit();
 }
+
+
+
+// On page load set the theme.
+// (function() {
+//   let onpageLoad = localStorage.getItem('theme') || '';
+// 	let onp = localStorage.getItem('font') || '';
+//   let element = document.body;
+//   console.log(onp);
+//   console.log(onpageLoad);
+//   element.classList.add(onpageLoad);
+//   document.getElementById("theme").textContent =
+//     localStorage.getItem("theme") || "light";
+// })();
+
+// function themeToggle() {
+//   let element = document.body;
+//   element.classList.toggle("dark-mode");
+
+//   let theme = localStorage.getItem("theme");
+//   if (theme && theme === "dark-mode") {
+//     localStorage.setItem("theme", "");
+//   } else {
+//     localStorage.setItem("theme", "dark-mode");
+//   }
+
+//   document.getElementById("theme").textContent = localStorage.getItem("theme");
+// }

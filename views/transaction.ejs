@@ -1,12 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Transactions</h1>
-    
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"
+		/>
+		<title>transactions</title>
+		<link rel="stylesheet" href="../stylesheets/dashboard.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<main id="main">
+			<!--  ----Main Background Code ----- -->
+			<%- include('partials/MainBackground.ejs') %>
+
+			<!--  ---- Left Container Code ----- -->
+			<%- include('partials/LeftContainer.ejs') %>
+
+			<!--  ----Center Container Code ----- -->
+			<div class="center-container">
+				<section class="overlay"></section>
+
+				<!-- Search Bar with Data filter Manipulation -->
+				<div class="search-container">
+					<div class="input-box">
+						<i class="uil uil-search"></i>
+						<input
+							type="text"
+							id="search-input"
+							oninput="SetDefault($(this).val());"
+							placeholder="Search here..."
+						/>
+						<button class="button">Search</button>
+					</div>
+
+					<!-- Render a SERVER EXPENSE DATA from Server/Database and hidden inside the Template Tag from here we send Data to our Javascript file -->
+					<% expenses.forEach(e=>{ %>
+					<template data-expense-rec>
+						<div data-search-show-rec>
+							<span class="e-icon"><i class="ri-oil-line"></i> </span>
+							<div class="e-details-container">
+								<span class="e-details">
+									<div class="exp-category" data-category-rec>
+										<%= e.category %>
+									</div>
+									<div class="exp-payment" data-paymentMode-rec>
+										<%= e.paymentmode %>
+									</div>
+									<div class="exp-remark" data-remark-rec><%= e.remark %></div>
+									<div class="exp-user" data-user-rec><%= e.user %></div>
+									<div class="exp-id" data-id-rec><%= e._id %></div>
+									<div class="exp-date" data-date-rec><%= e.createdAt %></div>
+									<div class="exp-amount" data-amount-rec><%= e.amount %></div>
+								</span>
+								<span class="e-amount">
+									<i class="ri-money-rupee-circle-line"></i>
+									<div class="exp-amount" data-amount-rec></div>
+								</span>
+							</div>
+							<a href="">View</a>
+						</div>
+					</template>
+					<% }) %>
+
+					<!-- This is BLANK CONTAINER where we are going to show data by SEARCH BAR MANIPULATION -->
+					<div class="search-showing notvisible" data-expense-container></div>
+					<!-- from JavaScript Data which have collect from SERVER EXPENSE DATA now that we are using here and show it to BLANK CONTAINER -->
+					<template data-expense-template>
+						<li data-search-show>
+							<span class="e-icon"><i class="ri-oil-line"></i> </span>
+							<div class="e-details-container">
+								<span class="e-details">
+									<div class="exp-category" data-category></div>
+									<div class="exp-remark" data-remark></div>
+									<div class="exp-payment" data-paymentMode></div>
+									<div class="exp-date" data-date></div>
+									<div class="exp-user" data-user></div>
+									<div class="exp-id" data-id></div>
+								</span>
+								<span class="e-amount">
+									<i class="ri-money-rupee-circle-line"></i>
+									<div class="exp-amount" data-amount></div>
+								</span>
+							</div>
+							<a href="">View</a>
+						</li>
+					</template>
+				</div>
+				<!-- --- Heading Board Where we can se Total Remaining Expense heading --- -->
+				<div class="head-board hd-pd dfacjsb">
+					<!-- ---- Head Overlay Add Expense/Money --- -->
+					<!-- ---- Head Overlay Add Expense/Money --- -->
+					<div class="head-overlay">
+						<div class="head-close">
+							<i class="ri-add-fill"></i>
+						</div>
+						<div class="expense-form" id="expenseForm">
+							<form class="addExpenseForm" action="/addexpense" method="post">
+								<h2>Add Your Expense</h2>
+								<div class="expFormbox required">
+									<label for="amount">Amount:</label>
+									<input
+										type="number"
+										id="amount"
+										name="amount"
+										placeholder="Enter Amount in Rupees ..."
+										required
+									/>
+								</div>
+								<div class="expFormbox required">
+									<label for="expenseName" class="required"
+										>Name/Description:</label
+									>
+									<input
+										type="text"
+										name="remark"
+										id="expenseName"
+										placeholder="Type Expense Name here ..."
+										required
+									/>
+								</div>
+
+								<div class="expFormbox required">
+									<label for="category">Category:</label>
+									<select name="category" id="category" required>
+										<option value="" disabled selected>Select category</option>
+										<option value="Food">Food</option>
+										<option value="Housing">Home</option>
+										<option value="Transportation">Transportation</option>
+										<option value="Education">Education</option>
+										<option value="Travel">Travel</option>
+										<option value="Technology">Technology</option>
+										<option value="Clothes">Clothing and Accessories</option>
+										<option value="Entertainment">Entertainment</option>
+										<!-- Add more categories as needed -->
+									</select>
+								</div>
+								<div class="expFormbox">
+									<label for="date">Date:(Optional)</label>
+									<input style="margin-right: 5px" type="date" id="datetime" />
+									<input type="time" id="datetime" />
+								</div>
+
+								<div class="expFormbox required">
+									<label for="paymentMethod">Payment Method:</label>
+									<select name="paymentmode" id="paymentMethod" required>
+										<option value="" disabled selected>
+											Select Payment Method
+										</option>
+										<option value="cash">Cash</option>
+										<option value="online">Online</option>
+										<option value="card">Card</option>
+										<!-- Add more payment methods as needed -->
+									</select>
+								</div>
+
+								<button class="addExpenseFormBtn" onclick="submitExpense()">
+									Submit Expense
+								</button>
+								<div class="success-message">Income Added Successfully!</div>
+								<div class="detailsfill-message">Fill all the Details.</div>
+							</form>
+							<form class="addIncomeForm" action="/addincome" method="post">
+								<h2>Add Income</h2>
+								<div class="expFormbox required">
+									<label for="expenseName" class="required"
+										>Income Amount</label
+									>
+									<input
+										type="number"
+										id="expenseName"
+										class="expenseNameInput"
+										placeholder="Enter Amount of Your Income..."
+										required
+										name="incomeAmount"
+									/>
+								</div>
+								<div class="expFormbox required">
+									<label for="expenseName" class="required">Description</label>
+									<input
+										type="text"
+										id="expenseName"
+										placeholder="Write about income ..."
+										required
+										name="description"
+									/>
+								</div>
+								<div class="expFormbox required">
+									<label for="category">Currency</label>
+									<select name="currency" id="category" required>
+										<option value="" disabled selected>Select Currency</option>
+										<option value="inr">INR</option>
+										<option value="usd">USD</option>
+										<option value="yen">YEN</option>
+										<!-- Add more categories as needed -->
+									</select>
+								</div>
+								<div class="expFormbox">
+									<label for="date">Date:(Optional)</label>
+									<input style="margin-right: 5px" type="date" id="datetime" />
+								</div>
+
+								<button class="addExpenseFormBtn" onclick="submitExpense()">
+									Add Income
+								</button>
+								<div class="success-message">Income Added Successfully!</div>
+								<div class="detailsfill-message">Fill all the Details.</div>
+							</form>
+						</div>
+					</div>
+					<!-- ---- Head Overlay Add Expense/Money --- -->
+					<!-- ---- Head Overlay Add Expense/Money --- -->
+
+					<!-- left and right side which stabel -->
+					<div class="left-head">
+						<h1 class="head-board-heading">My Expenses</h1>
+						<div class="remaining-exp">
+							<%= income.reduce((accumulator,currentValue)=> accumulator+
+							currentValue.incomeAmount , 0) %>
+						</div>
+					</div>
+					<div class="right-head">
+						<div class="graph">graph</div>
+						<div class="btns dfacjc">
+							<button data-hover="btn" class="add-expenseBtn add-btn">
+								<i class="ri-money-rupee-circle-fill"></i>
+								<div class="overflow-hidden">
+									<div class="overflow-vertical">
+										<div class="overflow-txt"><span>Add Expense</span></div>
+										<div class="overflow-txt ot-abosolute">
+											<span>Add Expense</span>
+										</div>
+									</div>
+								</div>
+							</button>
+							<button data-hover="btn" class="add-incomeBtn add-btn">
+								<i class="ri-money-rupee-circle-fill"></i>
+								<div class="overflow-hidden">
+									<div class="overflow-vertical">
+										<div class="overflow-txt"><span>Add Money</span></div>
+										<div class="overflow-txt ot-abosolute">
+											<span>Add Money</span>
+										</div>
+									</div>
+								</div>
+							</button>
+						</div>
+					</div>
+					<!-- left and right side which stabel -->
+				</div>
+				<!-- --- Heading Board Where we can se Total Remaining Expense heading --- -->
+
+				<%= expenses.reduce((accumulator,currentValue)=> accumulator+
+				currentValue.amount , 0) %>
+
+				<form action="/addincome" method="post">
+					<input
+						type="number"
+						name="incomeAmount"
+						placeholder="Enter amount"
+						required
+					/>
+					<select name="incomeMonth" id="addincome" required>
+						<option value="" disabled selected>Select Payment Method</option>
+						<option value="jan">Jan</option>
+						<option value="feb">Feb</option>
+						<option value="mar">Mar</option>
+						<option value="april">April</option>
+						<option value="may">May</option>
+						<option value="june">June</option>
+						<option value="july">July</option>
+						<option value="aug">August</option>
+						<option value="sept">Sept</option>
+						<option value="oct">Oct</option>
+						<option value="nov">Nov</option>
+						<option value="dec">Dec</option>
+					</select>
+					<select name="currency" id="currency">
+						<option value="" disabled selected>Select Currency</option>
+						<option value="inr">INR</option>
+						<option value="usd">USD</option>
+						<option value="yen">YEN</option>
+					</select>
+					<input type="text" name="description" placeholder="write note ..." />
+					<input type="date" name="date" />
+					<button>add money</button>
+				</form>
+			</div>
+			<!--  ----Center Container Code ----- -->
+
+			<!--  ----Right Container Code ----- -->
+			<%- include('partials/RightContainer.ejs') %>
+			<!--  ----Right Container Code ----- -->
+		</main>
+        
+		<script src="../javascripts/dashboard.js"></script>
+		<script src="../javascripts/lightdarkmode.js"></script>
+	</body>
 </html>
