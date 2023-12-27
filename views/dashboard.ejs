@@ -126,7 +126,12 @@
 
 								<div class="expFormbox required">
 									<label for="category">Category:</label>
-									<select name="category" class="expenseCatInput" id="category" required>
+									<select
+										name="category"
+										class="expenseCatInput"
+										id="category"
+										required
+									>
 										<option value="" disabled selected>Select category</option>
 										<option value="Food">Food</option>
 										<option value="Housing">Home</option>
@@ -192,7 +197,12 @@
 								</div>
 								<div class="expFormbox required">
 									<label for="category">Currency</label>
-									<select name="currency" class="addIncomeCurrencyInput" id="category" required>
+									<select
+										name="currency"
+										class="addIncomeCurrencyInput"
+										id="category"
+										required
+									>
 										<option value="" disabled selected>Select Currency</option>
 										<option value="inr">INR</option>
 										<option value="usd">USD</option>
@@ -265,7 +275,10 @@
 							<h1>graph</h1>
 						</div> -->
 						<div class="fin-value">
-							<span>$85000</span>
+							<span class="totalIncomeValue">
+								<%= income.reduce((accumulator,currentValue)=> accumulator+
+								currentValue.incomeAmount , 0) %>
+							</span>
 							<span
 								><i class="ri-arrow-up-line"></i>
 								<h4>14%</h4></span
@@ -281,7 +294,10 @@
 							<h1>graph</h1>
 						</div> -->
 						<div class="fin-value">
-							<span>$85000</span>
+							<span class="totalExpenseValue"
+								><%= expenses.reduce((accumulator,currentValue)=> accumulator+
+								currentValue.amount , 0) %></span
+							>
 							<span
 								><i class="ri-arrow-up-line"></i>
 								<h4>14%</h4></span
@@ -297,7 +313,9 @@
 							<h1>graph</h1>
 						</div> -->
 						<div class="fin-value">
-							<span>$85000</span>
+							<span class="totalSavingsValue"><%= income.reduce((accumulator,currentValue)=> accumulator+
+								currentValue.incomeAmount , 0) -  expenses.reduce((accumulator,currentValue)=> accumulator+
+								currentValue.amount , 0) %></span>
 							<span
 								><i class="ri-arrow-up-line"></i>
 								<h4>14%</h4></span

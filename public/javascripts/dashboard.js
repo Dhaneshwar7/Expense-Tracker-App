@@ -253,21 +253,6 @@ function submitExpense() {
 	const addIncomeInput = $('.addIncomeInput').val();
 	const addIncomeDescInput = $('.addIncomeDescInput').val().trim();
 	const addIncomeCurrencyInput = $('.addIncomeCurrencyInput').val();
-	console.log(expNameInput);
-	console.log(expNumInput);
-	// console.log(expCatInput);
-	// console.log(expPaymentInput);
-	// if (
-	// 	expNameInput === '' &&
-	// 	expNumInput === '' &&
-	// 	expCatInput === null &&
-	// 	expPaymentInput === null
-	// ) {
-	// 	$('.detailsfill-message').addClass('formMsg-show');
-	// } else {
-	// 	$('.detailsfill-message').removeClass('formMsg-show');
-	// 	$('.success-message').addClass('formMsg-show');
-	// }
 	if (
 		(addIncomeInput === '' ||
 			addIncomeDescInput === '' ||
@@ -282,10 +267,8 @@ function submitExpense() {
 		$('.detailsfill-message').removeClass('formMsg-show');
 		$('.success-message').addClass('formMsg-show');
 	}
-
-	// document.getElementById('expenseForm').classList.add('form-submitted');
 }
-
+/* Select Date from calendar  ------ */
 function selectCalendarDate() {
 	var received_date = document.getElementById('month-input').value;
 	console.log(received_date);
