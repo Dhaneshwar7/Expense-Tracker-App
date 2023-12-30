@@ -13,7 +13,7 @@
 	<body>
 		<main id="main">
 			<!--  ----Main Background Code ----- -->
-			<%- include('partials/MainBackground.ejs') %>
+			<!-- <%- include('partials/MainBackground.ejs') %> -->
 
 			<!--  ---- Left Container Code ----- -->
 			<%- include('partials/LeftContainer.ejs') %>
@@ -313,9 +313,12 @@
 							<h1>graph</h1>
 						</div> -->
 						<div class="fin-value">
-							<span class="totalSavingsValue"><%= income.reduce((accumulator,currentValue)=> accumulator+
-								currentValue.incomeAmount , 0) -  expenses.reduce((accumulator,currentValue)=> accumulator+
-								currentValue.amount , 0) %></span>
+							<span class="totalSavingsValue"
+								><%= income.reduce((accumulator,currentValue)=> accumulator+
+								currentValue.incomeAmount , 0) -
+								expenses.reduce((accumulator,currentValue)=> accumulator+
+								currentValue.amount , 0) %></span
+							>
 							<span
 								><i class="ri-arrow-up-line"></i>
 								<h4>14%</h4></span

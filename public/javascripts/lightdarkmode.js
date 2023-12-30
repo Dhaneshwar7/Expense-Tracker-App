@@ -14,7 +14,7 @@ function DarkLightMode() {
 			$(':root').css('--graycolor', '#f5f5f5');
 			$(':root').css('--purplebg', '#f5f5f5');
 			$(':root').css('--purpno', '#3a36c3');
-			$(':root').css('--whiteBg', '#35353ad8');
+			$(':root').css('--whiteBg', '#2a2a2cf6');
 			$(':root').css(
 				'--mainLightBg',
 				'112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%'
@@ -31,7 +31,7 @@ function DarkLightMode() {
 			$(':root').css('--darkGray', '#0d0d0d');
 			$(':root').css('--purplebg', '#5955e7');
 			$(':root').css('--purpno', 'transparent');
-			$(':root').css('--whiteBg', 'rgba(255, 255, 255, 0.84)');
+			$(':root').css('--whiteBg', 'rgba(255, 255, 255, 0.962)');
 			$(':root').css(
 				'--mainLightBg',
 				`90deg, rgba(201, 200, 219, 1) 0%, rgba(164, 201, 255, 1) 35% ,

@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
-require("dotenv").config({path : "/" + "./.env"})
-
+require('dotenv').config({ path: '/' + './.env' });
+const mongoose = require('mongoose');
 console.log(require('dotenv').config());
-
 mongoose
 	.connect(process.env.MONGO_URL)
 	.then(() => console.log('Database connected!'))

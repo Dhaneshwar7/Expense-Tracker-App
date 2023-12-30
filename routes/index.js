@@ -4,6 +4,10 @@ const User = require('../models/userModel');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const moment = require('moment');
+const path = require('path');
+const fs = require('fs');
+const uploadOnCloudinary = require('../utils/cloudinary')
+const upload = require('../middlewares/multer.middleware');
 
 passport.use(new LocalStrategy(User.authenticate()));
 // passport.use(User.createStrategy());
@@ -11,6 +15,33 @@ passport.use(new LocalStrategy(User.authenticate()));
 const { sendmail } = require('../utils/sendmail');
 const Expense = require('../models/expenseModel');
 const Income = require('../models/incomeModel');
+
+router.post(
+	'/uploadimg',
+	isLoggedIn,
+	upload.single('image'),
+	async function (req, res, next) {
+		try {
+			const onUser = await User.findOne({
+				username: req.session.passport.user,
+			});
+			const avatarLocalPath = req.file?.path;
+			console.log(avatarLocalPath);
+			if (!avatarLocalPath) {
+				throw new ApiError(400, 'Avatar file is missing');
+			}
+			  const result = await uploadOnCloudinary(avatarLocalPath , onUser);
+			console.log(onUser);
+			req.file.filename = result.url;
+			onUser.logo = req.file.filename;
+			onUser.save().then(function () {
+				res.redirect('back');
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+);
 
 /*  -------  Login and Signup  ----------------- */
 /*  -------  Login and Signup  ----------------- */
@@ -128,7 +159,7 @@ router.get('/dashboard', isLoggedIn, async function (req, res, next) {
 	try {
 		const { expenses } = await req.user.populate('expenses');
 		const { income } = await req.user.populate('income');
-		console.log(req.user, expenses, income);
+		// console.log(req.user, expenses, income);
 
 		res.render('dashboard', { admin: req.user, expenses, income });
 	} catch (error) {
@@ -226,5 +257,22 @@ router.get('/profile', isLoggedIn, function (req, res, next) {
 router.get('/settings', function (req, res, next) {
 	res.render('settings');
 });
+
+// router.post('/uploadpic', upload.single('avatar'), async function(req,res,next) {
+// 	try {
+// 		if (req.file.path) return null;
+// 		// upload the on the Cloudinary
+// 		console.log(req.file.path);
+// 		const response = await cloudinary.uploader.upload(req.file.path, {
+// 			resource_type: 'image',
+// 		});
+// 		// file has been uploaded Successfully
+// 		console.log('file upload Successfully', response.url);
+// 		return response;
+// 	} catch (error) {
+// 		//REmover the Locally saved temporary file as the upload operation got failed
+// 		return null;
+// 	}
+// });
 
 module.exports = router;

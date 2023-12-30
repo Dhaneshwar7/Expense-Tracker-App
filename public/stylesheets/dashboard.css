@@ -27,8 +27,9 @@
 	--timeDLmode: '2s';
 	--easeDLmode: ease;
 	--centerBg: #f4f4f452;
-	--whiteBg: rgba(255, 255, 255, 0.84);
+	--whiteBg: rgba(255, 255, 255, 0.962);
 	--grayBg: #35353ad8;
+	--text:#2a2a2cf6;
 	--fontHeading: 2.2vmax;
 }
 .darkMode {
@@ -257,7 +258,7 @@ nav ul li a span {
 	width: 120vw;
 	height: 120vh;
 	scale: 0;
-	background-color: rgba(255, 255, 255, 0.577);
+	background-color: rgba(88, 85, 85, 0.832);
 	position: absolute;
 	z-index: 50;
 	top: 50%;
@@ -804,7 +805,8 @@ input[type='number']::-webkit-outer-spin-button {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 20px 15px;
+	margin-top: 30px;
+	/* padding: 20px 15px; */
 	gap: 10px;
 }
 .dp {
@@ -812,8 +814,15 @@ input[type='number']::-webkit-outer-spin-button {
 	max-width: 60px;
 	min-height: 60px;
 	min-width: 60px;
-	background-color: rgb(255, 0, 191);
 	border-radius: 50%;
+	overflow: hidden;
+}
+.profile-pic>img{
+	scale: 2;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
 }
 .profile-name {
 	font-weight: 600;

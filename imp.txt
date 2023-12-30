@@ -3,3 +3,55 @@ process.env.MONGO_URL
 'mongodb://127.0.0.1:27017/ExpenseApp'
 
 inline fold extension mohamad almairi
+
+
+console.log(require('dotenv').config());
+
+
+
+
+
+const uploadOnCloudinary = async (localFilePath) => {
+    try {
+        if (!localFilePath) return null
+        //upload the file on cloudinary
+        const response = await cloudinary.uploader.upload(localFilePath, {
+            resource_type: "auto"
+        })
+        // file has been uploaded successfull
+        //console.log("file is uploaded on cloudinary ", response.url);
+        fs.unlinkSync(localFilePath)
+        return response;
+
+    } catch (error) {
+        fs.unlinkSync(localFilePath) // remove the locally saved temporary file as the upload operation got failed
+        return null;
+    }
+}
+
+
+
+
+
+
+router.post(
+	'/uploadimg',
+	isLoggedIn,
+	upload.single('image'),
+	async function (req, res, next) {
+		const onUser = await User.findOne({ username: req.session.passport.user });
+		console.log(onUser);
+		try {
+			const result = await cloudinary.uploader.upload(req.file.path, {
+				public_id: `${onUser._id}_logo`,
+			});
+			req.file.filename = result.url;
+			onUser.logo = req.file.filename;
+			onUser.save().then(function () {
+				res.redirect('back');
+			});
+		} catch (error) {
+			console.log(error);	
+		}
+	}
+);

@@ -282,3 +282,4 @@ function selectCalendarDate() {
 
 	document.getElementById('wallet-calendar').submit();
 }
+
