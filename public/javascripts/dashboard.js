@@ -11,7 +11,7 @@ function desktopMenuClickBtn() {
 				flag = 1;
 			} else {
 				$('.close-menu').removeClass('open');
-				$('.right-container').css('width', '25%');
+				$('.right-container').css('width', '20%');
 				$('.center-container').css('width', '60%');
 				flag = 0;
 			}
@@ -124,6 +124,7 @@ importExpTemplate.forEach(elem => {
 
 /*---- Code For Search Box Visiblity below Search bar  ----*/
 const expenseContainer = document.querySelector('[data-expense-container]');
+const transactionContainer = document.querySelector('[data-transaction-container]');
 const expenseCardTemplate = document.querySelector('[data-expense-template]');
 let newSortExpList = [];
 
@@ -163,6 +164,7 @@ newSortExpList = newCollectDataArray.map(function (expData) {
 	expDateValue.textContent = setDate.toLocaleString();
 	// console.log(new Date(expData.eDate));
 	expenseContainer.append(expCard);
+	transactionContainer.append(expCard);
 	unWantedDataHidden();
 	return {
 		eCat: expData.eCategory,
@@ -180,6 +182,9 @@ newSortExpList = newCollectDataArray.map(function (expData) {
 let SearchInput = document.getElementById('search-input');
 function SearchExpenseListNotVisible() {
 	document.querySelector('.search-showing').classList.remove('visible');
+}
+function transactionListVisible(){
+	document.querySelector('.transaction-showing').classList.add('visible');
 }
 function SearchExpenseListVisible() {
 	document.querySelector('.search-showing').classList.add('visible');
@@ -282,4 +287,3 @@ function selectCalendarDate() {
 
 	document.getElementById('wallet-calendar').submit();
 }
-

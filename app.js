@@ -6,6 +6,7 @@ var logger = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
 const User = require("./models/userModel");
+const bodyParser = require('body-parser');
 
 // db connect
 require("./models/db");
@@ -24,6 +25,8 @@ app.use(logger("dev"));
 
 // bodyparser use in app
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
