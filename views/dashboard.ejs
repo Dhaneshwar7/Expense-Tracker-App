@@ -228,8 +228,8 @@
 
 					<!-- left and right side which stabel -->
 					<div class="left-head">
-						<h1 class="head-board-heading">My Expenses</h1>
-						<div class="remaining-exp">
+						<h1 class="head-board-heading">My Income</h1>
+						<div class="remaining-exp currency">
 							<%= income.reduce((accumulator,currentValue)=> accumulator+
 							currentValue.incomeAmount , 0) %>
 						</div>
@@ -275,7 +275,7 @@
 							<h1>graph</h1>
 						</div> -->
 						<div class="fin-value">
-							<span class="totalIncomeValue">
+							<span class="totalIncomeValue currency">
 								<%= income.reduce((accumulator,currentValue)=> accumulator+
 								currentValue.incomeAmount , 0) %>
 							</span>
@@ -294,7 +294,7 @@
 							<h1>graph</h1>
 						</div> -->
 						<div class="fin-value">
-							<span class="totalExpenseValue"
+							<span class="totalExpenseValue currency"
 								><%= expenses.reduce((accumulator,currentValue)=> accumulator+
 								currentValue.amount , 0) %></span
 							>
@@ -313,7 +313,7 @@
 							<h1>graph</h1>
 						</div> -->
 						<div class="fin-value">
-							<span class="totalSavingsValue"
+							<span class="totalSavingsValue currency"
 								><%= income.reduce((accumulator,currentValue)=> accumulator+
 								currentValue.incomeAmount , 0) -
 								expenses.reduce((accumulator,currentValue)=> accumulator+

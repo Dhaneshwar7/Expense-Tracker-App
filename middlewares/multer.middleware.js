@@ -4,7 +4,7 @@ const path = require('path')
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, './public/dps');
+		cb(null, './public/temp');
 	},
 	filename: function (req, file, cb) {
 		crypto.randomBytes(13, function (err, buff) {

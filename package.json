@@ -10,6 +10,7 @@
 		"node": "v18.13.0"
 	},
 	"dependencies": {
+		"body-parser": "^1.20.2",
 		"cloudinary": "^1.41.1",
 		"cookie-parser": "~1.4.4",
 		"crypto": "^1.0.1",

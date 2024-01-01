@@ -6,7 +6,7 @@ const LocalStrategy = require('passport-local');
 const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
-const uploadOnCloudinary = require('../utils/cloudinary')
+const uploadOnCloudinary = require('../utils/cloudinary');
 const upload = require('../middlewares/multer.middleware');
 
 passport.use(new LocalStrategy(User.authenticate()));
@@ -15,6 +15,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 const { sendmail } = require('../utils/sendmail');
 const Expense = require('../models/expenseModel');
 const Income = require('../models/incomeModel');
+const exp = require('constants');
 
 router.post(
 	'/uploadimg',
@@ -30,7 +31,7 @@ router.post(
 			if (!avatarLocalPath) {
 				throw new ApiError(400, 'Avatar file is missing');
 			}
-			  const result = await uploadOnCloudinary(avatarLocalPath , onUser);
+			const result = await uploadOnCloudinary(avatarLocalPath, onUser);
 			console.log(onUser);
 			req.file.filename = result.url;
 			onUser.logo = req.file.filename;
@@ -197,8 +198,8 @@ router.post('/addincome', isLoggedIn, async function (req, res, next) {
 router.get('/wallet', isLoggedIn, async function (req, res, next) {
 	try {
 		const { expenses } = await req.user.populate('expenses');
+
 		const { income } = await req.user.populate('income');
-		console.log(req.user, expenses, income);
 		const currentTime = {
 			fullDate: moment().format('MMMM MM DD YY'),
 			fullMonth: moment().format('MMMM'),
@@ -221,13 +222,65 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 });
 router.post('/search-calendar', isLoggedIn, async function (req, res, next) {
 	try {
-		const { expenses } = await req.user.populate('expenses');
+		let { expenses } = await req.user.populate('expenses');
 		const { income } = await req.user.populate('income');
+		const [selYear, selMonth] = await req.body.walletmonth.split('-');
+		console.log(`this is year :${selYear} , this month${selMonth}`);
+		console.log(selYear);
+		console.log(selMonth);
 		const currentTime = {
 			wallcal: req.body.walletmonth,
 		};
-		const [selYear, selMonth] = req.body.walletmonth.split('-');
-		console.log(income);
+		const inpuDat = req.body.walletmonth;
+		console.log(inpuDat);
+		function getMonthName(monthNumber) {
+			const date = new Date(2022, monthNumber - 1, 1); // Subtract 1 as months are zero-based in JavaScript
+			const monthName = new Intl.DateTimeFormat('en-US', {
+				month: 'short',
+			}).format(date);
+			return monthName;
+		}
+		const numericMonth = Number(selMonth); // Replace this with the actual numeric month
+		const monthName = getMonthName(numericMonth);
+
+		// Example usage
+		console.log(monthName); // Output: March
+		console.log(typeof monthName);
+		const yearName = String(selYear);
+		console.log(yearName);
+		console.log(typeof yearName);
+
+		// console.log(req.body.walletmonth);
+		// console.log(typeof req.body.walletmonth);
+
+		// console.log(income);
+		function findExpensesByDigits(expensesArray, userInpMonth, useInpYear) {
+			const matchingExpenses = expensesArray.filter(expense => {
+				// console.log(typeof expense.createdAt);
+				let createdAtString = expense.createdAt.toString();
+				console.log(`originanl ${createdAtString}`);
+				console.log(typeof createdAtString);
+				const datstring = expense.createdAt.toLocaleDateString();
+				console.log(datstring);
+				console.log(typeof createdAtString);
+				const monthstring = expense.createdAt.getMonth();
+				const yearSring = expense.createdAt.getFullYear();
+				console.log(`this is mon ${monthstring} and year ${yearSring}`);
+				return (createdAtString =
+					createdAtString.includes(userInpMonth) ||
+					createdAtString.includes(useInpYear));
+			});
+			return matchingExpenses;
+		}
+
+		// Example usage
+		// const userInpMonth = ; // Replace this with user input
+		const matchingExpenses = findExpensesByDigits(
+			expenses,
+			monthName,
+			yearName
+		);
+		console.log(matchingExpenses);
 		res.render('wallet', {
 			admin: req.user,
 			expenses,
@@ -241,38 +294,79 @@ router.post('/search-calendar', isLoggedIn, async function (req, res, next) {
 
 router.get('/transaction', isLoggedIn, async function (req, res, next) {
 	try {
-		const { expenses } = await req.user.populate('expenses');
-		const { income } = await req.user.populate('income');
-		console.log(req.user, expenses, income);
+		let { expenses } = await req.user.populate('expenses');
+		let { income } = await req.user.populate('income');
+
+		// console.log(req.user, expenses, income);
 
 		res.render('transaction', { admin: req.user, expenses, income });
 	} catch (error) {
 		res.send(error);
 	}
 });
-router.get('/profile', isLoggedIn, function (req, res, next) {
-	res.render('profile');
+router.post('/search', async function (req, res, next) {
+	try {
+		let search = req.body.search;
+		let data = await User.findOne({
+			username: req.session.passport.user,
+		})
+			.populate({ path: 'expenses' })
+			.then(function (som) {
+				return som.find();
+			});
+		res.status(200).json(data);
+	} catch (error) {
+		res.send(error);
+	}
+});
+
+// router.post('/search', isLoggedIn, async function (req, res, next) {
+// 	try {
+// 		const search = req.body.search;
+// 		const loginuser = await User.findOne({
+// 			username: req.session.passport.user,
+// 		});
+// 		await loginuser.populate('expenses').then(exp => {
+// 			exp.find({
+// 				$or: [
+// 					{ amount: { $regex: '.*' + search + '.*', $options: 'i' } },
+// 					{ remark: { $regex: '.*' + search + '.*', $options: 'i' } },
+// 					{ category: { $regex: '.*' + search + '.*', $options: 'i' } },
+// 					{ paymentmode: { $regex: '.*' + search + '.*', $options: 'i' } },
+// 				],
+// 			}).then(ok=>{
+// 				res.status(200).json(ok);
+// 			})
+// 		});
+
+// 		// res.render('transaction', { admin: req.user, expenses });
+// 	} catch (error) {
+// 		console.log(error);
+// 		res.send(error);
+// 	}
+// });
+router.get('/profile', isLoggedIn, async function (req, res, next) {
+	try {
+		let { expenses } = await req.user.populate('expenses');
+		let { income } = await req.user.populate('income');
+
+		// console.log(req.user, expenses, income);
+
+		res.render('profile', { admin: req.user, expenses, income });
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 router.get('/settings', function (req, res, next) {
 	res.render('settings');
 });
 
-// router.post('/uploadpic', upload.single('avatar'), async function(req,res,next) {
-// 	try {
-// 		if (req.file.path) return null;
-// 		// upload the on the Cloudinary
-// 		console.log(req.file.path);
-// 		const response = await cloudinary.uploader.upload(req.file.path, {
-// 			resource_type: 'image',
-// 		});
-// 		// file has been uploaded Successfully
-// 		console.log('file upload Successfully', response.url);
-// 		return response;
-// 	} catch (error) {
-// 		//REmover the Locally saved temporary file as the upload operation got failed
-// 		return null;
-// 	}
-// });
+router.get('/income', isLoggedIn, async function (req, res, next) {
+	try {
+	} catch (error) {
+		res.status(500).json({ error: 'Internal Server Error' });
+	}
+});
 
 module.exports = router;

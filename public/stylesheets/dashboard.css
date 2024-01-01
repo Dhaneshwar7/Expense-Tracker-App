@@ -1,11 +1,11 @@
 @import url(../fonts/remixicon.css);
 @font-face {
-	font-family: roboto;
-	src: url(../fonts/Roboto/Roboto-Bold.ttf);
+	font-family: robotob;
+	src: url(../fonts/Roboto/Roboto-Black.ttf) format();
 }
 @font-face {
-	font-family: gilroy;
-	src: url(../fonts/Gilroy-Font/Radomir\ Tinkov\ -\ Gilroy-ExtraBold.otf);
+	font-family: robotol;
+	src: url(../fonts/Roboto/Roboto-Light.ttf);
 }
 :root {
 	/* --mainbg: #e3f4f4; */
@@ -37,13 +37,12 @@
 	--darkGray: #f5f5f5;
 	--graycolor: #f5f5f5;
 	--purplebg: #f5f5f5;
-
 } 
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: gilroy;
+	font-family: robotob ,sans-serif;
 }
 html,
 body {
@@ -63,13 +62,13 @@ input[type='number'] {
 }
 .currency::before {
 	content: '\20B9';
+	width: 80%;
+	opacity: .9;
+
 	margin-right: 3px;
 }
 a {
 	text-decoration: none;
-}
-i {
-	font-size: 32px;
 }
 li {
 	list-style: none;
@@ -92,8 +91,9 @@ li {
 	background-position: center;
 	background-size: cover;
 	display: flex;
+	justify-content: flex-start;
 	flex-direction: row;
-	padding: 1rem;
+	/* padding: 1rem; */
 	overflow: hidden;
 }
 /* ----------------- Illustration Container -----------  */
@@ -152,8 +152,8 @@ li {
 	text-align: center;
 	margin: 0;
 	font-size: xx-large;
-	font-family: gilroy;
-	font-weight: 900;
+	font-family: roboto;
+	font-weight: 100;
 }
 .navigation {
 	height: fit-content;
@@ -163,16 +163,12 @@ li {
 
 nav ul li a {
 	text-decoration: none;
-	font-size: 1.1rem;
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	font-weight: 700;
 	list-style: none;
 	display: inline-flex;
 	align-items: center;
 	justify-content: start;
 	gap: 20px;
-	font-family: roboto;
+	font-family: robotob ,sans-serif;
 	cursor: pointer;
 	white-space: nowrap;
 	/* background-color: red; */
@@ -192,7 +188,7 @@ nav ul li a:hover {
 	-webkit-text-stroke: 1px var(--purpno);
 }
 nav ul li a i {
-	font-size: 32px;
+	font-size: 28px;
 	text-align: center;
 }
 nav ul li a span {
@@ -211,7 +207,7 @@ nav ul li a span {
 }
 .about {
 	font-size: 1.05rem;
-	font-weight: 600;
+	font-weight: 700;
 }
 .overflow-vertical {
 	position: relative;
@@ -247,10 +243,10 @@ nav ul li a span {
 .center-container {
 	width: 60%;
 	border-radius: 50px;
-	background-color: #f4f4f452;
-	backdrop-filter: blur(3px);
+	background-color: #f4f4f46d;
+	backdrop-filter: blur(10px);
 	/* filter: blur(0.5px); */
-	transition: all ease 0.5s;
+	transition: all ease 0.3s;
 	z-index: 10;
 	padding: 25px;
 }
@@ -351,7 +347,7 @@ nav ul li a span {
 	width: 100%;
 	box-shadow: 10px 10px 80px #0000005b, inset -10px -10px 50px #ffffff62;
 	border-radius: 10px;
-	background-color: #ffffffe8;
+	background-color: #ffffff;
 }
 .search-box {
 	height: fit-content;
@@ -389,16 +385,13 @@ nav ul li a span {
 	align-items: center;
 	/* grid-template-columns: repeat(auto-fill  , min-max(50x, 1fr)); */
 }
-.e-icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 8px;
+.e-icon {	
+	padding: 4px;
 	background-color: gray;
 	border-radius: 8px;
 }
 .e-icon i {
-	font-size: 25px;
+	font-size: 20px;
 }
 .e-details-container {
 	width: 100%;
@@ -415,8 +408,11 @@ nav ul li a span {
 .exp-category,
 .exp-remark {
 	text-transform: capitalize;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 800;
+}
+.exp-date{
+	font-size: 12px;
 }
 .exp-category {
 	display: none;
@@ -433,6 +429,7 @@ nav ul li a span {
 	/* margin-left: 80px; */
 	display: flex;
 	align-items: center;
+	font-size: 16px;
 	font-weight: 800;
 	margin-right: 30px;
 }
@@ -494,13 +491,14 @@ nav ul li a span {
 	background-color: var(--darkGray);
 	position: absolute;
 	margin: 20px 20px 0 0;
-	padding: 10px;
+	padding: 15px;
 	border-radius: 50%;
 	transform: rotate(45deg);
 	transition: all 0.7s ease;
 	cursor: pointer;
 }
 .head-close i {
+	font-size: 24px;
 	color: var(--darkWhite);
 }
 .head-close:hover {
@@ -606,7 +604,12 @@ input[type='number']::-webkit-outer-spin-button {
 	align-self: center;
 	transition: opacity 0.1s ease-out;
 }
-
+.success-message{
+	color: #4caf50;
+}
+.detailsfill-message{
+	color: rgb(230, 230, 12);
+}
 .formMsg-show {
 	display: block;
 	align-self: center;
@@ -679,10 +682,10 @@ input[type='number']::-webkit-outer-spin-button {
 }
 .add-btn span {
 	font-size: 1rem;
-	font-weight: 600;
+	font-weight: 400;
 	font-style: normal;
 	text-transform: capitalize;
-	font-family: gilroy;
+	font-family: robotob, sans-serif;
 }
 /* ----- Center Heading Board ----- */
 
@@ -719,11 +722,12 @@ input[type='number']::-webkit-outer-spin-button {
 /* ----------------- Right Container -----------  */
 
 .right-container {
-	width: 25%;
+	width: 20%;
 	max-height: 100%;
 	transition: all ease 0.5s;
 	/* background-color: rgb(132, 140, 60); */
 	z-index: 9;
+	padding: 0.5rem 1rem;
 }
 .right-desktop {
 	padding: 1rem;
