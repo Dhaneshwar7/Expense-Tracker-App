@@ -298,53 +298,43 @@ router.get('/transaction', isLoggedIn, async function (req, res, next) {
 		let { income } = await req.user.populate('income');
 
 		// console.log(req.user, expenses, income);
+		console.log(expenses);
 
-		res.render('transaction', { admin: req.user, expenses, income });
+		res.render('transaction', { admin: req.user, expenses });
 	} catch (error) {
 		res.send(error);
 	}
 });
-router.post('/search', async function (req, res, next) {
-	try {
-		let search = req.body.search;
-		let data = await User.findOne({
-			username: req.session.passport.user,
+
+router.get('/search/:key', isLoggedIn, function (req, res, next) {
+	console.log(req.params);
+	User.findOne({ username: req.session.passport.user })
+		.populate({
+			populate: 'expenses.user',
+			populate:{
+				path:"user"
+			},
 		})
-			.populate({ path: 'expenses' })
-			.then(function (som) {
-				return som.find();
-			});
-		res.status(200).json(data);
-	} catch (error) {
-		res.send(error);
-	}
+		.then(function (user) {
+			Expense.find({
+				$or: [
+					{ amount: { $regex: req.params.key } },
+					{ remark: { $regex: req.params.key } },
+					{ category: { $regex: req.params.key } },
+					{ paymentmode: { $regex: req.params.key } },
+				],
+			})
+				.populate('user')
+				.then(function (expenses) {
+					console.log(expenses);
+					res.render('transaction', {
+						expenses: expenses,
+						admin: req.user,
+					});
+				});
+		});
 });
 
-// router.post('/search', isLoggedIn, async function (req, res, next) {
-// 	try {
-// 		const search = req.body.search;
-// 		const loginuser = await User.findOne({
-// 			username: req.session.passport.user,
-// 		});
-// 		await loginuser.populate('expenses').then(exp => {
-// 			exp.find({
-// 				$or: [
-// 					{ amount: { $regex: '.*' + search + '.*', $options: 'i' } },
-// 					{ remark: { $regex: '.*' + search + '.*', $options: 'i' } },
-// 					{ category: { $regex: '.*' + search + '.*', $options: 'i' } },
-// 					{ paymentmode: { $regex: '.*' + search + '.*', $options: 'i' } },
-// 				],
-// 			}).then(ok=>{
-// 				res.status(200).json(ok);
-// 			})
-// 		});
-
-// 		// res.render('transaction', { admin: req.user, expenses });
-// 	} catch (error) {
-// 		console.log(error);
-// 		res.send(error);
-// 	}
-// });
 router.get('/profile', isLoggedIn, async function (req, res, next) {
 	try {
 		let { expenses } = await req.user.populate('expenses');

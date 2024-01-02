@@ -89,28 +89,38 @@
 					</template>
 				</div>
 				<!-- Transaction Container -->
-
-				<%= expenses.reduce((accumulator,currentValue)=> accumulator+
-				currentValue.amount , 0) %> 
-				<%= expenses %>
-				<!-- <form action="/search-expenses">
-					<select name="key" id="">
-						<option value="amount">Amount</option>
-						<option value="remark">Remark</option>
-						<option value="category">Category</option>
-						<option value="paymentmode">Payment Mode</option>
-					</select>
-					<input type="text" name="value" placeholder="enter search term" />
-					<button>Filter</button>
-				</form> -->
-				<form action="/search" method="post">
-					<input type="text" name="search">
-					<input type="submit" value="search">
-				</form>
-				<div class="transaction-showing" data-transaction-container>
-					
+				<div class="tabs">
+					<a href="/search">All</a>
+					<a href="/search/food">Food</a>
+					<a href="/search/home">Home</a>
+					<a href="/search/travel">Travel</a>
+					<a href="/search/technology">technology</a>
+					<a href="/search/cloth">Cloth</a>
+					<a href="/search/transportation">Transportation</a>
+					<a href="/search/education">Education</a>
 				</div>
 
+				<%= expenses.reduce((accumulator,currentValue)=> accumulator+
+				currentValue.amount , 0) %> <br />
+				<hr />
+				<%= expenses %>
+				<hr />
+				<input
+					id="searchbar"
+					type="search"
+					onkeyup="searchExpense()"
+					placeholder="Search for food, coffee etc."
+				/>
+				<a href="/search">search</a>
+
+				<% expenses.forEach(function(exp){ %>
+				<div class="expCard">
+					<p><%= exp.amount %></p>
+					<h1><%= exp.remark %></h1>
+					<h2><%= exp.category %></h2>
+					<p><%= exp.paymentmode %></p>
+				</div>
+				<% }) %>
 			</div>
 			<!--  ----Center Container Code ----- -->
 
