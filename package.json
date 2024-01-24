@@ -7,7 +7,7 @@
 		"build": "npm install"
 	},
 	"engines": {
-		"node": "v18.13.0"
+		"node": "v18.18.2"
 	},
 	"dependencies": {
 		"body-parser": "^1.20.2",
