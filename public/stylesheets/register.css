@@ -17,9 +17,10 @@ body {
 	overflow: hidden;
 	/* margin: -20px 0 50px; */
 }
-html,body{
-    -webkit-overflow-scrolling : touch !important;
-    overflow: auto !important;
+html,
+body {
+	-webkit-overflow-scrolling: touch !important;
+	overflow: auto !important;
 	height: 100% !important;
 }
 
@@ -32,7 +33,7 @@ h1 {
 	font-weight: bold;
 	margin: 0;
 }
-button{
+button {
 	cursor: pointer;
 }
 h2 {
@@ -144,6 +145,28 @@ input {
 	z-index: 5;
 	animation: show 0.6s;
 }
+.reg-error {
+	position: absolute;
+	/* background-color: red; */
+	height: fit-content;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.reg-error > .error {
+	padding: 5px 15px;
+	border-radius: 4px;
+	background-color: rgba(235, 135, 135, 0.864);
+	font-size: 0.8rem;
+}
+.reg-error > .success {
+	padding: 5px 15px;
+	border-radius: 4px;
+	background-color: rgba(109, 215, 107, 0.864);
+	font-size: 0.8rem;
+}
+
 
 @keyframes show {
 	0%,
@@ -427,4 +450,19 @@ footer a {
 	.container.mobile-right-panel-active .overlay-right {
 		transform: translateX(-100%);
 	}
+	/* .reg-error {
+		position: absolute;
+		top: -20%;
+		height: fit-content;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.reg-error > p {
+		padding: 5px 15px;
+		border-radius: 4px;
+		background-color: rgba(235, 135, 135, 0.864);
+		font-size: 1rem;
+	} */
 }

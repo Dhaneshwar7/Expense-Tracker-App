@@ -46,6 +46,16 @@
 				</form>
 			</div>
 			<div class="form-container sign-in-container">
+				<% if (messages.error) { %>
+				<div class="reg-error">
+					<p class="error"><%= messages.error %></p>
+				</div>
+				<% } %>
+				<% if (messages.success) { %>
+				<div class="reg-error">
+					<p class="success success-msg"><%= messages.success %></p>
+				</div>
+				<% } %>
 				<form action="/signin" method="post">
 					<h1>Sign in</h1>
 					<div class="social-container">
@@ -54,7 +64,13 @@
 						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 					</div>
 					<span>or use your account</span>
-					<input name="username" required type="text" placeholder="Username" autocomplete="username" />
+					<input
+						name="username"
+						required
+						type="text"
+						placeholder="Username"
+						autocomplete="username"
+					/>
 					<input
 						autocomplete="current-password"
 						name="password"
@@ -69,15 +85,15 @@
 			<div class="overlay-container">
 				<div class="overlay">
 					<div class="overlay-panel overlay-left">
+						<h1>Hello, Friend!</h1>
+						<p>Enter your personal details and start journey with us</p>
+						<button class="ghost" id="signIn">Sign In</button>
+					</div>
+					<div class="overlay-panel overlay-right">
 						<h1>Welcome Back!</h1>
 						<p>
 							To keep connected with us please login with your personal info
 						</p>
-						<button class="ghost" id="signIn">Sign In</button>
-					</div>
-					<div class="overlay-panel overlay-right">
-						<h1>Hello, Friend!</h1>
-						<p>Enter your personal details and start journey with us</p>
 						<button class="ghost" id="signUp">Sign Up</button>
 					</div>
 				</div>

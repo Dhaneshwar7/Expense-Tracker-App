@@ -1,5 +1,7 @@
 process.env.MONGO_URL
 
+mongodb Atlas - Deltamike7550@gmail.com
+
 'mongodb://127.0.0.1:27017/ExpenseApp'
 
 inline fold extension mohamad almairi

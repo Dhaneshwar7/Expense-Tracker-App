@@ -36,7 +36,7 @@ router.post(
 			req.file.filename = result.url;
 			onUser.logo = req.file.filename;
 			onUser.save().then(function () {
-				res.redirect('back');
+				res.redirect('/profile');
 			});
 		} catch (error) {
 			console.log(error);
@@ -47,26 +47,55 @@ router.post(
 /*  -------  Login and Signup  ----------------- */
 /*  -------  Login and Signup  ----------------- */
 router.get('/', function (req, res, next) {
-	res.render('index', { admin: req.user });
+	res.render('index', { admin: req.user, messages: req.flash() });
 });
-router.post(
-	'/signin',
-	passport.authenticate('local', {
-		successRedirect: '/dashboard',
-		failureRedirect: '/',
-	}),
-	function (req, res, next) {}
-);
+// router.post(
+// 	'/signin',
+// 	passport.authenticate('local', {
+// 		successRedirect: '/dashboard',
+// 		// failureRedirect: '/',
+// 		// failureFlash: true,
+// 		failureMessage: true,
+// 	}),
+// 	function (req, res, next) {}
+// );
+router.post('/signin', function (req, res, next) {
+	passport.authenticate('local', function (err, user, info) {
+		if (err) {
+			return next(err);
+		}
+		if (!user) {
+			// Flash an error message to the session
+			req.flash('error', 'Invalid Username or Password ! Try again');
+			return res.redirect('/');
+		}
+		req.logIn(user, function (err) {
+			if (err) {
+				return next(err);
+			}
+			return res.redirect('/dashboard');
+		});
+	})(req, res, next);
+});
 router.post('/signup', async function (req, res, next) {
 	try {
 		await User.register(
 			{ username: req.body.username, email: req.body.email },
 			req.body.password
 		);
-		res.redirect('/');
+		req.flash('success', 'Registration Done | Login with Details');
+		return res.redirect('/dashboard');
 	} catch (error) {
-		console.log(error);
-		res.send(error);
+		if (error.name === 'UserExistsError') {
+			// Flash an error message indicating that the user already exists
+			req.flash('error', 'User already exists');
+			// Redirect back to the signup page
+			res.redirect('/');
+		} else {
+			// If the error is not due to the user already existing, log and send the error
+			console.error(error);
+			res.send(error);
+		}
 	}
 });
 
@@ -348,11 +377,27 @@ router.get('/profile', isLoggedIn, async function (req, res, next) {
 		let { expenses } = await req.user.populate('expenses');
 		let { income } = await req.user.populate('income');
 
-		// console.log(req.user, expenses, income);
-
 		res.render('profile', { admin: req.user, expenses, income });
 	} catch (error) {
 		res.send(error);
+	}
+});
+router.post('/profile-update', isLoggedIn, async (req, res, next) => {
+	try {
+		const { firstname, lastname, contact } = req.body;
+		const user = await User.findByIdAndUpdate(
+			{ _id: req.user.id },
+			{ ...req.user, firstname, lastname, contact }
+			// 	{ new: true, runValidators: true }
+		);
+		console.log(req.body);
+		console.log(user);
+		await user.save();
+		req.flash('success', 'Profile updated successfully');
+		return res.redirect('back');
+	} catch (error) {
+		req.flash("error", error)
+		return res.render('profile', { admin: req.user });
 	}
 });
 

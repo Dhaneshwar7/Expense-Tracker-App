@@ -1,11 +1,38 @@
-const mongoose = require("mongoose");
-const plm = require("passport-local-mongoose");
+const mongoose = require('mongoose');
+const plm = require('passport-local-mongoose');
 
 const userModel = new mongoose.Schema(
 	{
-		username: String,
+		username: {
+			type: String,
+			required: true,
+			index: { unique: true, sparse: true },
+		},
 		password: String,
-		email: String,
+		firstname: {
+			type: String,
+			// required: [true, 'First Name is Required'],
+			minLength: [3, 'Firstname should be atleast of 3 Character'],
+		},
+		lastname: {
+			type: String,
+			// required: [true, 'Last Name is Required'],
+			minLength: [3, 'Last Name should be atleast of 3 Character'],
+		},
+		email: {
+			type: String,
+			required: true,
+			index: { unique: true, sparse: true },
+			match: [
+				/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+				'Please fill a valid email address',
+			],
+		},
+		contact: {
+			type: Number,
+			maxLength: [10, 'Contact number cannot exceed 10 Numbers'],
+			mimLength: [10, 'Contact number cannot exceed 10 Numbers'],
+		},
 		logo: {
 			type: String,
 			default: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png',
@@ -22,4 +49,4 @@ const userModel = new mongoose.Schema(
 
 userModel.plugin(plm);
 
-module.exports = mongoose.model("user", userModel);
+module.exports = mongoose.model('user', userModel);

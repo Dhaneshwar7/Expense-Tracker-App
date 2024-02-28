@@ -8,6 +8,7 @@ const session = require('express-session');
 const User = require('./models/userModel');
 const bodyParser = require('body-parser');
 var morgan = require('morgan');
+const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 
 // db connect
@@ -33,6 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
+
 
 // static(/) public code use in app
 app.use(express.static(path.join(__dirname, 'public')));
@@ -67,6 +69,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// Flash middleware setup
+app.use(flash());
 
 // routes use in app
 app.use('/', indexRouter);

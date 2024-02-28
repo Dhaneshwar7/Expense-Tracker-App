@@ -164,7 +164,7 @@ newSortExpList = newCollectDataArray.map(function (expData) {
 	expDateValue.textContent = setDate.toLocaleString();
 	// console.log(new Date(expData.eDate));
 	expenseContainer.append(expCard);
-	transactionContainer.append(expCard);
+	// transactionContainer.append(expCard);
 	unWantedDataHidden();
 	return {
 		eCat: expData.eCategory,

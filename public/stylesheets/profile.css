@@ -1,15 +1,24 @@
+.profile-container {
+	width: 100%;
+	height: 100%;
+	/* background-color: rgb(206, 199, 199); */
+}
 .wrapper {
-	padding: 30px 50px;
+	padding: 30px 30px;
 	border: 1px solid #ddd;
 	border-radius: 15px;
 	margin: 10px auto;
-	max-width: 600px;
+	max-width: 700px;
+	height: 80%;
+	width: 80%;
+	background-color: whitesmoke;
 }
+
 h4 {
 	letter-spacing: -1px;
 	font-weight: 900;
-    font-size: 32px;
-    font-family: robotob ,sans-serif;
+	font-size: 32px;
+	font-family: robotob, sans-serif;
 	text-align: center;
 }
 .pb-4 {
@@ -19,8 +28,8 @@ h4 {
 	display: flex;
 }
 .py-2 {
-	padding-top: 8px;
-	padding-bottom: 8px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 .pl-2 {
 	padding-left: 8px;
@@ -28,34 +37,87 @@ h4 {
 .align-items-start {
 	align-items: start;
 }
-.row{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+.row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
-.col-md-6{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.col-md-6 {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
-.form-control{
-    padding: 7px 15px;
-    border: 1px solid black;
-    background: rgba(255, 255, 255, 0.657);
-    box-shadow: none;
+input[type='text'] {
+	width: 17vw;
+	max-width: 100%;
+	min-width: 100%;
 }
-.form-control:focus{
-    display: none;
+input[type='email'] {
+	width: 17vw;
+	/* width: 200px; */
+}
+input[type='number'] {
+	/* width: 200px; */
+	width: 17vw;
+}
+/* .col-md-6 input{
+	width: fit-content;
+} */
+.upload-container {
+	gap: 20px;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+.upload-form {
+	/* background-color: #20ac37; */
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+.choose {
+	padding: 20px 20px;
+	cursor: pointer;
+	background-color: rgba(190, 184, 184, 0.621);
+	border-radius: 8px;
+}
+.col-md-6 label {
+	margin-left: 5px;
+	color: black;
+}
+.form-control {
+	width: 100%;
+	padding: 7px 15px;
+	border: 1px solid black;
+	background: rgba(255, 255, 255, 0.657);
+	box-shadow: none;
+}
+/* .form-control:focus {
+	display: none;
+} */
+.nochange:focus {
+	display: none;
+}
+.nochange::placeholder {
+	font-weight: 600;
+}
+.savecontainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+	padding: 30px;
+	/* background-color: red; */
 }
 .py-3 {
-    padding-left: 12px;
-    padding-right: 12px;
+	padding-left: 12px;
+	padding-right: 12px;
 }
-.pl-sm-4d{
-    padding-left: 15px;
+.pl-sm-4d {
+	padding-left: 15px;
 }
-    /* .border-bottom {
+/* .border-bottom {
         border: 1px solid black;
     } */
 .img {
@@ -79,7 +141,7 @@ h4 {
 
 label {
 	margin-bottom: 0;
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 500;
 	color: #777;
 	padding-left: 3px;
@@ -87,10 +149,13 @@ label {
 
 .form-control {
 	border-radius: 10px;
+	width: 100%;
 }
 
 input[placeholder] {
 	font-weight: 500;
+	opacity: 0.7;
+	text-indent: 5px; /* Adjust the indentation value as needed */
 }
 .form-control:focus {
 	box-shadow: none;
@@ -112,17 +177,31 @@ select:focus {
 .button {
 	background-color: #fff;
 	color: #0779e4;
+	cursor: pointer;
+	border: 0.5px solid gray;
 }
 .button:hover {
-	background-color: #0779e4;
+	background-color: #3672ab;
 	color: #fff;
 }
+.btn {
+	padding: 10px 25px;
+	outline: none;
+	text-decoration: none;
+	border-radius: 30px;
+	box-shadow: none;
+	cursor: pointer;
+}
 .btn-primary {
-	background-color: #0779e4;
+	background-color: #eef3ef;
+}
+.savebtn:hover {
+	background-color: #61a56c;
+	color: white;
 }
 .danger {
 	background-color: #fff;
-	color: #e20404;
+	color: black;
 	border: 1px solid #ddd;
 }
 .danger:hover {
