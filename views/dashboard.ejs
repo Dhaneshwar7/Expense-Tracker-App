@@ -9,6 +9,7 @@
 		<title>Dashboard</title>
 		<link rel="stylesheet" href="../stylesheets/dashboard.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	</head>
 	<body>
 		<main id="main">
@@ -362,7 +363,14 @@
 					<input type="date" name="date" />
 					<button>add money</button>
 				</form>
+				<div
+					class="chart-container"
+					style="position: relative; height: 40vh; width: 80vw"
+				>
+					<canvas id="myChart" width="400" height="400"></canvas>
+				</div>
 			</div>
+
 			<!--  ----Center Container Code ----- -->
 
 			<!--  ----Right Container Code ----- -->
@@ -371,5 +379,76 @@
 		</main>
 		<script src="../javascripts/dashboard.js"></script>
 		<script src="../javascripts/lightdarkmode.js"></script>
+		<script>
+			const expensesData = JSON.parse('<%- expensesdata %>');
+			const incomeData = JSON.parse('<%- incomedata %>');
+			console.log(expensesData);
+			console.log(incomeData);
+			const totalIncome = incomeData.reduce(
+				(accumulator, currentValue) => accumulator + currentValue.incomeAmount,
+				0
+			);
+			const totalExpense = expensesData.reduce(
+				(acc, curr) => acc + curr.amount,
+				0
+			);
+			const remainingtotal = totalIncome - totalExpense;
+			console.log(totalIncome);
+			console.log(totalExpense);
+			console.log(remainingtotal);
+			let expArr = [];
+			expensesData.forEach(element => {
+				expArr.push(element.amount);
+				// expArr.push(element.amount);
+			});
+			console.log(expArr);
+
+			// Initialize variables to store total amounts for each payment mode
+			let cashTotal = 0;
+			let onlineTotal = 0;
+
+			// Loop through expenses and calculate total amounts for each payment mode
+			expArr.forEach(expense => {
+				if (expense.paymentmode === 'cash') {
+					cashTotal += expense.amount;
+				} else if (expense.paymentmode === 'online') {
+					onlineTotal += expense.amount;
+				}
+			});
+			console.log(cashTotal);
+			console.log(onlineTotal);
+
+			// Get canvas element
+			var ctx = document.getElementById('myChart').getContext('2d');
+
+			// Create chart
+			var myChart = new Chart(ctx, {
+				type: 'doughnut', // Type of chart (e.g., bar, line, pie, etc.)
+				data: {
+					labels: ['Total Savings', 'Total Income', 'Total Expense'], // Labels for the data
+					datasets: [
+						{
+							label: 'My First Dataset',
+							data: [remainingtotal, totalIncome, totalExpense],
+							backgroundColor: ['black', 'blue', 'red'],
+							hoverOffset: 4,
+						},
+					],
+				},
+				options: {
+					// Configuration options
+					// responsive: true,
+					// maintainAspectRatio: ture,
+					// aspectRatio: 1 / 2,
+					// onResize: null,
+					// resizeDelay: 0,
+					scales: {
+						y: {
+							beginAtZero: true, // Start y-axis at 0
+						},
+					},
+				},
+			});
+		</script>
 	</body>
 </html>

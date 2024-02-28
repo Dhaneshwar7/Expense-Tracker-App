@@ -2,9 +2,12 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0 , maximum-scale=1"
+		/>
 		<title>ExpenseApp💰🤑</title>
-		<link rel="stylesheet" href="../stylesheets/register.css">
+		<link rel="stylesheet" href="../stylesheets/register.css" />
 	</head>
 	<body>
 		<!-- <h2>Weekly Coding Challenge #1: Sign in/up Form</h2> -->
@@ -18,9 +21,27 @@
 						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 					</div>
 					<span>or use your email for registration</span>
-					<input name="username" required type="text" placeholder="Username" />
-					<input name="email" required type="email" placeholder="Email" />
-					<input name="password" required type="password" placeholder="Password" />
+					<input
+						autocomplete="username"
+						name="username"
+						required
+						type="text"
+						placeholder="Username"
+					/>
+					<input
+						autocomplete="email"
+						name="email"
+						required
+						type="email"
+						placeholder="Email"
+					/>
+					<input
+						autocomplete="current-password"
+						name="password"
+						required
+						type="password"
+						placeholder="Password"
+					/>
 					<button>Sign Up</button>
 				</form>
 			</div>
@@ -33,8 +54,14 @@
 						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 					</div>
 					<span>or use your account</span>
-					<input name="username" required type="text" placeholder="Username" />
-					<input name="password" required type="password" placeholder="Password" />
+					<input name="username" required type="text" placeholder="Username" autocomplete="username" />
+					<input
+						autocomplete="current-password"
+						name="password"
+						required
+						type="password"
+						placeholder="Password"
+					/>
 					<a href="/forget">Forgot your password?</a>
 					<button>Sign In</button>
 				</form>
@@ -57,6 +84,6 @@
 			</div>
 		</div>
 
-<script src="../javascripts/script.js"></script>
+		<script src="../javascripts/script.js"></script>
 	</body>
 </html>

@@ -8,6 +8,7 @@ const session = require('express-session');
 const User = require('./models/userModel');
 const bodyParser = require('body-parser');
 var morgan = require('morgan');
+const MongoStore = require('connect-mongo');
 
 // db connect
 require('./models/db');
@@ -36,11 +37,30 @@ app.use(cookieParser());
 // static(/) public code use in app
 app.use(express.static(path.join(__dirname, 'public')));
 
+// app.use(
+// 	session({
+// 		saveUninitialized: true,
+// 		resave: true,
+// 		secret: 'opkd8et4nlk',
+// 	})
+// );
 app.use(
 	session({
+		resave: false,
 		saveUninitialized: true,
-		resave: true,
-		secret: 'opkd8et4nlk',
+		secret: 'money money money',
+		cookie: {
+			maxAge: 24 * 60 * 60 * 1000,
+		}, //100 hours
+		store: MongoStore.create(
+			{
+				mongoUrl: process.env.MONGO_URL,
+				autoRemove: 'disabled',
+			},
+			function (err) {
+				console.log(err);
+			}
+		),
 	})
 );
 app.use(passport.initialize());

@@ -22,8 +22,6 @@ function mobileScreens() {
 	});
 }
 
-
-
 function dyanamicResponsive() {
 	var widthh = window.innerWidth;
 	window.addEventListener('resize', function () {
@@ -36,7 +34,7 @@ function dyanamicResponsive() {
 	if (widthh >= 0 && widthh <= 375) {
 		// Code to execute when yourValue is between 0 and 400
 		// console.log('/* Media Query for low resolution Mobile Devices */');
-        mobileScreens();
+		mobileScreens();
 		// console.log('yeee ahi');
 	} else if (widthh >= 376 && widthh <= 600) {
 		// Code to execute when yourValue is between 401 and 600
@@ -50,12 +48,11 @@ function dyanamicResponsive() {
 	} else if (widthh >= 1024 && widthh <= 1500) {
 		// console.log(' /* Media Query for Tab LandScape */');
 		// console.log('ye 1024 se upar');
-        bigScreens();
+		bigScreens();
 	}
 }
 
 dyanamicResponsive();
-
 
 document.addEventListener('focusin', function (event) {
 	if (event.target.tagName === 'INPUT') {
@@ -63,6 +60,5 @@ document.addEventListener('focusin', function (event) {
 	}
 });
 
-
-const currentUrl = window.location.href;
-console.log(currentUrl);
+// const currentUrl = window.location.href;
+// console.log(currentUrl);

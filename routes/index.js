@@ -27,12 +27,12 @@ router.post(
 				username: req.session.passport.user,
 			});
 			const avatarLocalPath = req.file?.path;
-			console.log(avatarLocalPath);
+			// console.log(avatarLocalPath);
 			if (!avatarLocalPath) {
 				throw new ApiError(400, 'Avatar file is missing');
 			}
 			const result = await uploadOnCloudinary(avatarLocalPath, onUser);
-			console.log(onUser);
+			// console.log(onUser);
 			req.file.filename = result.url;
 			onUser.logo = req.file.filename;
 			onUser.save().then(function () {
@@ -91,7 +91,7 @@ router.post('/send-mail', async function (req, res, next) {
 		justify-content: center;
 	"
 >
-	<h1>User Not Found! <a href="/forget">Try Again</a></h1>
+	<h1>User Not Found! <a href="/">Try Again</a></h1>
 </div>`);
 
 		sendmail(user.email, user, res, req);
@@ -161,8 +161,16 @@ router.get('/dashboard', isLoggedIn, async function (req, res, next) {
 		const { expenses } = await req.user.populate('expenses');
 		const { income } = await req.user.populate('income');
 		// console.log(req.user, expenses, income);
+		// console.log(expenses);
+		// console.log(income);
 
-		res.render('dashboard', { admin: req.user, expenses, income });
+		res.render('dashboard', {
+			admin: req.user,
+			expenses,
+			income,
+			expensesdata: JSON.stringify(expenses),
+			incomedata: JSON.stringify(income),
+		});
 	} catch (error) {
 		res.send(error);
 	}
@@ -209,7 +217,7 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 			currYear: moment().format('YY'),
 			wallcal: moment().format('YYYY-MM'),
 		};
-		console.log(currentTime);
+		// console.log(currentTime);
 		res.render('wallet', {
 			admin: req.user,
 			expenses,
@@ -298,7 +306,7 @@ router.get('/transaction', isLoggedIn, async function (req, res, next) {
 		let { income } = await req.user.populate('income');
 
 		// console.log(req.user, expenses, income);
-		console.log(expenses);
+		// console.log(expenses);
 
 		res.render('transaction', { admin: req.user, expenses });
 	} catch (error) {
@@ -311,8 +319,8 @@ router.get('/search/:key', isLoggedIn, function (req, res, next) {
 	User.findOne({ username: req.session.passport.user })
 		.populate({
 			populate: 'expenses.user',
-			populate:{
-				path:"user"
+			populate: {
+				path: 'user',
 			},
 		})
 		.then(function (user) {
