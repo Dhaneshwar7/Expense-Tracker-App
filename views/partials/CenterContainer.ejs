@@ -132,7 +132,7 @@
 					<button class="addExpenseFormBtn" onclick="submitExpense()">
 						Submit Expense
 					</button>
-					<div class="success-message msg">Expense Added Successfully!</div>
+					<div class="success-message expense-success-message msg">Expense Added Successfully!</div>
 					<div class="detailsfill-message msg">Fill all the Details.</div>
 				</form>
 				<form class="addIncomeForm" action="/addincome" method="post">
@@ -142,7 +142,7 @@
 						<input
 							type="number"
 							id="expenseName"
-							class="expenseNameInput"
+							class="addIncomeInput"
 							placeholder="Enter Amount of Your Income..."
 							required
 							name="incomeAmount"
@@ -153,6 +153,7 @@
 						<input
 							type="text"
 							id="expenseName"
+							class="addIncomeDescInput"
 							placeholder="Write about income ..."
 							required
 							name="description"
@@ -160,7 +161,7 @@
 					</div>
 					<div class="expFormbox required">
 						<label for="category">Currency</label>
-						<select name="currency" id="category" required>
+						<select name="currency" class="addIncomeCurrencyInput" id="category" required>
 							<option value="" disabled selected>Select Currency</option>
 							<option value="inr">INR</option>
 							<option value="usd">USD</option>
@@ -173,10 +174,10 @@
 						<input style="margin-right: 5px" type="date" id="datetime" />
 					</div>
 
-					<button class="addExpenseFormBtn" onclick="submitExpense()">
+					<button class="addExpenseFormBtn" onclick="submitIncome()">
 						Add Income
 					</button>
-					<div class="success-message">Income Added Successfully!</div>
+					<div class="success-message income-success-message">Income Added Successfully!</div>
 					<div class="detailsfill-message">Fill all the Details.</div>
 				</form>
 			</div>

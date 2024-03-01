@@ -157,9 +157,9 @@
 										<option value="" disabled selected>
 											Select Payment Method
 										</option>
-										<option value="cash">Cash</option>
-										<option value="online">Online</option>
-										<option value="card">Card</option>
+										<option value="Cash">Cash</option>
+										<option value="Online">Online</option>
+										<option value="Card">Card</option>
 										<!-- Add more payment methods as needed -->
 									</select>
 								</div>
@@ -167,7 +167,9 @@
 								<button class="addExpenseFormBtn" onclick="submitExpense()">
 									Submit Expense
 								</button>
-								<div class="success-message">Income Added Successfully!</div>
+								<div class="success-message expense-success-message">
+									Expense Added Successfully!
+								</div>
 								<div class="detailsfill-message">Fill all the Details.</div>
 							</form>
 							<form class="addIncomeForm" action="/addincome" method="post">
@@ -216,10 +218,12 @@
 									<input style="margin-right: 5px" type="date" id="datetime" />
 								</div>
 
-								<button class="addExpenseFormBtn" onclick="submitExpense()">
+								<button class="addExpenseFormBtn" onclick="submitIncome()">
 									Add Income
 								</button>
-								<div class="success-message">Income Added Successfully!</div>
+								<div class="success-message income-success-message">
+									Income Added Successfully!
+								</div>
 								<div class="detailsfill-message">Fill all the Details.</div>
 							</form>
 						</div>

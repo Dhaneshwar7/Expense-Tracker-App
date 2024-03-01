@@ -8,6 +8,7 @@
 		/>
 		<title>transactions</title>
 		<link rel="stylesheet" href="../stylesheets/dashboard.css" />
+		<link rel="stylesheet" href="../stylesheets/transaction.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	</head>
 	<body>
@@ -20,76 +21,21 @@
 
 			<!--  ----Center Container Code ----- -->
 			<div class="center-container">
-				<section class="overlay"></section>
-
 				<!-- Search Bar with Data filter Manipulation -->
 				<div class="search-container">
 					<div class="input-box">
 						<i class="uil uil-search"></i>
 						<input
-							type="text"
-							id="search-input"
-							oninput="SetDefault($(this).val());"
+							type="search"
+							id="searchbar"
+							onkeyup="searchExpense()"
 							placeholder="Search here..."
 						/>
-						<button class="button">Search</button>
+						<!-- <button class="button">Search</button> -->
 					</div>
-
-					<!-- Render a SERVER EXPENSE DATA from Server/Database and hidden inside the Template Tag from here we send Data to our Javascript file -->
-					<% expenses.forEach(e=>{ %>
-					<template data-expense-rec>
-						<div data-search-show-rec>
-							<span class="e-icon"><i class="ri-oil-line"></i> </span>
-							<div class="e-details-container">
-								<span class="e-details">
-									<div class="exp-category" data-category-rec>
-										<%= e.category %>
-									</div>
-									<div class="exp-payment" data-paymentMode-rec>
-										<%= e.paymentmode %>
-									</div>
-									<div class="exp-remark" data-remark-rec><%= e.remark %></div>
-									<div class="exp-user" data-user-rec><%= e.user %></div>
-									<div class="exp-id" data-id-rec><%= e._id %></div>
-									<div class="exp-date" data-date-rec><%= e.createdAt %></div>
-									<div class="exp-amount" data-amount-rec><%= e.amount %></div>
-								</span>
-								<span class="e-amount">
-									<i class="ri-money-rupee-circle-line"></i>
-									<div class="exp-amount" data-amount-rec></div>
-								</span>
-							</div>
-							<a href="">View</a>
-						</div>
-					</template>
-					<% }) %>
-
-					<!-- This is BLANK CONTAINER where we are going to show data by SEARCH BAR MANIPULATION -->
-					<div class="search-showing notvisible" data-expense-container></div>
-					<!-- from JavaScript Data which have collect from SERVER EXPENSE DATA now that we are using here and show it to BLANK CONTAINER -->
-					<template data-expense-template>
-						<li data-search-show>
-							<span class="e-icon"><i class="ri-oil-line"></i> </span>
-							<div class="e-details-container">
-								<span class="e-details">
-									<div class="exp-category" data-category></div>
-									<div class="exp-remark" data-remark></div>
-									<div class="exp-payment" data-paymentMode></div>
-									<div class="exp-date" data-date></div>
-									<div class="exp-user" data-user></div>
-									<div class="exp-id" data-id></div>
-								</span>
-								<span class="e-amount">
-									<i class="ri-money-rupee-circle-line"></i>
-									<div class="exp-amount" data-amount></div>
-								</span>
-							</div>
-							<a href="">View</a>
-						</li>
-					</template>
 				</div>
 				<!-- Transaction Container -->
-				<div class="tabs">
+				<!-- <div class="tabs">
 					<a href="/search">All</a>
 					<a href="/search/food">Food</a>
 					<a href="/search/home">Home</a>
@@ -98,29 +44,68 @@
 					<a href="/search/cloth">Cloth</a>
 					<a href="/search/transportation">Transportation</a>
 					<a href="/search/education">Education</a>
-				</div>
+				</div> -->
+				<div class="transaction-container">
+					<div class="transaction-heading">
+						<h1>Transaction</h1>
+						<!-- <input
+							type="text"
+							id="searchbar"
+							onkeyup="searchExpense(food)"
+							placeholder="Search here..."
+						/> -->
+						<!-- 
+						<input
+							type="button"
+							id="searchbar"
+							value="food"
+							onclick="okd('food')"
+							placeholder="Search here..."
+						/> -->
+					</div>
+					<!-- <select id="cars" name="cars">
+						<option value="volvo">Volvo</option>
+						<option value="saab">Saab</option>
+						<option value="mercedes">Mercedes</option>
+						<option value="audi">Audi</option>
+					</select> -->
 
-				<%= expenses.reduce((accumulator,currentValue)=> accumulator+
-				currentValue.amount , 0) %> <br />
-				<hr />
-				<!-- <%= expenses %> -->
-				<hr />
-				<input
-					id="searchbar"
-					type="search"
-					onkeyup="searchExpense()"
-					placeholder="Search for food, coffee etc."
-				/>
-				<a href="/search">search</a>
+					<div class="transaction-list">
+						<section>
+							<div class="tbl-header">
+								<table cellpadding="0" cellspacing="0" border="0">
+									<thead>
+										<tr>
+											<th>Code</th>
+											<th>Name</th>
+											<th>Price</th>
+											<th>Category</th>
+											<th>Payment Mode</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<div class="tbl-content">
+								<table cellpadding="0" cellspacing="0" border="0">
+									<tbody>
+										<% expenses.forEach(function(exp ,idx){ %>
 
-				<% expenses.forEach(function(exp){ %>
-				<div class="expCard">
-					<p><%= exp.amount %></p>
-					<h1><%= exp.remark %></h1>
-					<h2><%= exp.category %></h2>
-					<p><%= exp.paymentmode %></p>
+										<tr class="expCard">
+											<td>
+												<div class="exp-count"><%= idx %></div>
+											</td>
+											<td class="exp-name"><%= exp.remark %></td>
+											<td>₹ <%= exp.amount %></td>
+											<td><%= exp.category %></td>
+											<td class="expPayment"><%= exp.paymentmode %></td>
+										</tr>
+										<% }) %>
+									</tbody>
+								</table>
+							</div>
+						</section>
+					</div>
 				</div>
-				<% }) %>
 			</div>
 			<!--  ----Center Container Code ----- -->
 
@@ -128,6 +113,7 @@
 			<%- include('partials/RightContainer.ejs') %>
 			<!--  ----Right Container Code ----- -->
 		</main>
+		<script src="../javascripts/transaction.js"></script>
 
 		<script src="../javascripts/dashboard.js"></script>
 		<script src="../javascripts/lightdarkmode.js"></script>

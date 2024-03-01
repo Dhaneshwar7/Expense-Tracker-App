@@ -387,8 +387,8 @@ router.post('/profile-update', isLoggedIn, async (req, res, next) => {
 		const { firstname, lastname, contact } = req.body;
 		const user = await User.findByIdAndUpdate(
 			{ _id: req.user.id },
-			{ ...req.user, firstname, lastname, contact }
-			// 	{ new: true, runValidators: true }
+			{ firstname, lastname, contact },
+			{ new: true, runValidators: true }
 		);
 		console.log(req.body);
 		console.log(user);
@@ -396,8 +396,8 @@ router.post('/profile-update', isLoggedIn, async (req, res, next) => {
 		req.flash('success', 'Profile updated successfully');
 		return res.redirect('back');
 	} catch (error) {
-		req.flash("error", error)
-		return res.render('profile', { admin: req.user });
+		console.error(error);
+		res.status(500).json({ error: 'Server error' });
 	}
 });
 

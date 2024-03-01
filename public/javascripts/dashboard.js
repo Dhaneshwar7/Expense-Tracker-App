@@ -124,7 +124,9 @@ importExpTemplate.forEach(elem => {
 
 /*---- Code For Search Box Visiblity below Search bar  ----*/
 const expenseContainer = document.querySelector('[data-expense-container]');
-const transactionContainer = document.querySelector('[data-transaction-container]');
+const transactionContainer = document.querySelector(
+	'[data-transaction-container]'
+);
 const expenseCardTemplate = document.querySelector('[data-expense-template]');
 let newSortExpList = [];
 
@@ -183,7 +185,7 @@ let SearchInput = document.getElementById('search-input');
 function SearchExpenseListNotVisible() {
 	document.querySelector('.search-showing').classList.remove('visible');
 }
-function transactionListVisible(){
+function transactionListVisible() {
 	document.querySelector('.transaction-showing').classList.add('visible');
 }
 function SearchExpenseListVisible() {
@@ -255,22 +257,34 @@ function submitExpense() {
 	const expNameInput = $('.expenseNameInput').val().trim();
 	const expCatInput = $('.expenseCatInput').val();
 	const expPaymentInput = $('#paymentMethod').val();
-	const addIncomeInput = $('.addIncomeInput').val();
-	const addIncomeDescInput = $('.addIncomeDescInput').val().trim();
-	const addIncomeCurrencyInput = $('.addIncomeCurrencyInput').val();
 	if (
-		(addIncomeInput === '' ||
-			addIncomeDescInput === '' ||
-			addIncomeCurrencyInput === null) &&
-		(expNameInput === '' ||
-			expNumInput === '' ||
-			expCatInput === null ||
-			expPaymentInput === null)
+		expNameInput === '' ||
+		expNumInput === '' ||
+		expCatInput === null ||
+		expPaymentInput === null
 	) {
 		$('.detailsfill-message').addClass('formMsg-show');
 	} else {
 		$('.detailsfill-message').removeClass('formMsg-show');
-		$('.success-message').addClass('formMsg-show');
+		$('.expense-success-message').addClass('formMsg-show');
+	}
+}
+function submitIncome() {
+	const addIncomeInput = $('.addIncomeInput').val();
+	const addIncomeDescInput = $('.addIncomeDescInput').val().trim();
+	const addIncomeCurrencyInput = $('.addIncomeCurrencyInput').val();
+	console.log('yes');
+	if (
+		addIncomeInput === '' ||
+		addIncomeDescInput === '' ||
+		addIncomeCurrencyInput === null
+	) {
+		console.log('khali');
+		$('.detailsfill-message').addClass('formMsg-show');
+	} else {
+		console.log('complete');
+		$('.detailsfill-message').removeClass('formMsg-show');
+		$('.income-success-message').addClass('formMsg-show');
 	}
 }
 /* Select Date from calendar  ------ */
@@ -288,11 +302,8 @@ function selectCalendarDate() {
 	document.getElementById('wallet-calendar').submit();
 }
 
-
-
-
-
-function searchExpense() {
+function searchExpense(value) {
+	console.log(value);
 	let input = document.querySelector('#searchbar').value;
 	input = input.toLowerCase();
 	let x = document.querySelectorAll('.expCard');
@@ -301,8 +312,21 @@ function searchExpense() {
 		if (!x[i].innerHTML.toLowerCase().includes(input)) {
 			x[i].style.display = 'none';
 		} else {
-			x[i].style.display = 'grid';
+			x[i].style.display = 'table-row';
 		}
 	}
 }
-  
+function okd(value) {
+	alert('ddk');
+	console.log('Clicked value:', value); // Print the value in the console
+}
+const selectElement = document.getElementById('cars');
+
+// Add event listener for the change event
+selectElement.addEventListener('change', function () {
+	// Get the selected option
+	const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+	// Print the selected option's value to the console
+	console.log('Selected option:', selectedOption.value);
+});
