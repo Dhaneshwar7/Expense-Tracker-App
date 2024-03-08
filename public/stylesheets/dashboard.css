@@ -62,7 +62,7 @@ input[type='number'] {
 }
 .currency::before {
 	content: '\20B9';
-	width: 80%;
+	width: 80%;	
 	opacity: 0.9;
 
 	margin-right: 3px;
@@ -130,7 +130,7 @@ li {
 /* ----------------- Left Container -----------  */
 .left-container {
 	max-height: 100%;
-	width: 20%;
+	max-width: 20%;
 	/* background-color: rgb(122, 218, 165); */
 	z-index: 10;
 }

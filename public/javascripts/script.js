@@ -3,16 +3,15 @@ function bigScreens() {
 	const signInButton = document.getElementById('signIn');
 	const container = document.getElementById('container');
 	signUpButton.addEventListener('click', () => {
-		console.log('ndjf');
+		// console.log('ndjf');
 		container.classList.add('right-panel-active');
 	});
 	signInButton.addEventListener('click', () => {
 		container.classList.remove('right-panel-active');
 	});
-
-	setInterval(() => {
-		document.querySelector('.reg-error').style.display = 'none';
-	}, 3500);
+	// setTimeout(() => {
+	// 	document.querySelector('.reg-error').style.display = 'none';
+	// }, 3500);
 }
 
 function mobileScreens() {

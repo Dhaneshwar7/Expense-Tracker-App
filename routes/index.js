@@ -17,6 +17,16 @@ const Expense = require('../models/expenseModel');
 const Income = require('../models/incomeModel');
 const exp = require('constants');
 
+/* --------- isLoggedIn Middleware --------- */
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		next();
+	} else {
+		res.redirect('/');
+	}
+}
+/* ---------  Middleware --------- */
+
 router.post(
 	'/uploadimg',
 	isLoggedIn,
@@ -79,12 +89,19 @@ router.post('/signin', function (req, res, next) {
 });
 router.post('/signup', async function (req, res, next) {
 	try {
-		await User.register(
+		const user = User.register(
 			{ username: req.body.username, email: req.body.email },
 			req.body.password
 		);
+		console.log(user);
+
 		req.flash('success', 'Registration Done | Login with Details');
-		return res.redirect('/dashboard');
+		// if (req.isAuthenticated()) {
+		// 	next();
+		// } else {
+		// 	res.redirect('/');
+		// }
+		res.redirect('/dashboard');
 	} catch (error) {
 		if (error.name === 'UserExistsError') {
 			// Flash an error message indicating that the user already exists
@@ -174,16 +191,6 @@ router.get('/signout', isLoggedIn, function (req, res, next) {
 });
 /* --------- Signout User  --------- */
 
-/* --------- isLoggedIn Middleware --------- */
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
-		next();
-	} else {
-		res.redirect('/');
-	}
-}
-/* --------- isLoggedIn Middleware --------- */
-
 /* ----------- First Main Dashboard */
 router.get('/dashboard', isLoggedIn, async function (req, res, next) {
 	try {
@@ -252,6 +259,8 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 			expenses,
 			income,
 			currentTime,
+			expensesdata: JSON.stringify(expenses),
+			incomedata: JSON.stringify(income),
 		});
 	} catch (error) {
 		res.send(error);
@@ -384,15 +393,19 @@ router.get('/profile', isLoggedIn, async function (req, res, next) {
 });
 router.post('/profile-update', isLoggedIn, async (req, res, next) => {
 	try {
-		const { firstname, lastname, contact } = req.body;
+		const updateFields = {};
+		if (req.body.firstname) updateFields.firstname = req.body.firstname;
+		if (req.body.lastname) updateFields.lastname = req.body.lastname;
+		if (req.body.contact) updateFields.contact = req.body.contact;
+
 		const user = await User.findByIdAndUpdate(
 			{ _id: req.user.id },
-			{ firstname, lastname, contact },
-			{ new: true, runValidators: true }
+			updateFields,
+			{ new: true, runValidators: true }	
 		);
 		console.log(req.body);
 		console.log(user);
-		await user.save();
+		// await user.save();
 		req.flash('success', 'Profile updated successfully');
 		return res.redirect('back');
 	} catch (error) {

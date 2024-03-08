@@ -6,8 +6,8 @@ function desktopMenuClickBtn() {
 		$('.close-menu').click(function () {
 			if (flag === 0) {
 				$('.close-menu').addClass('open');
-				$('.right-container').css('width', '10%');
-				$('.center-container').css('width', '75%');
+				$('.right-container').css('width', '15%');
+				$('.center-container').css('width', '70%');
 				flag = 1;
 			} else {
 				$('.close-menu').removeClass('open');
@@ -70,7 +70,7 @@ function dyanamicResponsive() {
 		// console.log('Media Query for Tablets Ipads portrait mode ');
 		desktopMenuClickBtn();
 	} else if (widthh >= 1024 && widthh <= 1500) {
-		// console.log(' /* Media Query for Tab LandScape */');
+		// console.log(' /* Media Query for Tab Land  cape */');
 		// console.log('ye 1024 se upar');
 		desktopMenuClickBtn();
 	}
@@ -320,13 +320,3 @@ function okd(value) {
 	alert('ddk');
 	console.log('Clicked value:', value); // Print the value in the console
 }
-const selectElement = document.getElementById('cars');
-
-// Add event listener for the change event
-selectElement.addEventListener('change', function () {
-	// Get the selected option
-	const selectedOption = selectElement.options[selectElement.selectedIndex];
-
-	// Print the selected option's value to the console
-	console.log('Selected option:', selectedOption.value);
-});

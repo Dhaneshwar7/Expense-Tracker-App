@@ -6,7 +6,7 @@
 			name="viewport"
 			content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"
 		/>
-		<title>transactions</title>
+		<title>Transactions 📋</title>
 		<link rel="stylesheet" href="../stylesheets/dashboard.css" />
 		<link rel="stylesheet" href="../stylesheets/transaction.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -88,18 +88,21 @@
 							<div class="tbl-content">
 								<table cellpadding="0" cellspacing="0" border="0">
 									<tbody>
-										<% expenses.forEach(function(exp ,idx){ %>
-
+										<% if (expenses.length === 0) { %>
+										<tr>
+											<td colspan="5">No transactions</td>
+										</tr>
+										<% } else { %> <% expenses.forEach(function(exp ,idx){ %>
 										<tr class="expCard">
 											<td>
-												<div class="exp-count"><%= idx %></div>
+												<div class="exp-count"><%= idx + 1 %></div>
 											</td>
 											<td class="exp-name"><%= exp.remark %></td>
 											<td>₹ <%= exp.amount %></td>
 											<td><%= exp.category %></td>
 											<td class="expPayment"><%= exp.paymentmode %></td>
 										</tr>
-										<% }) %>
+										<% }) %> <% } %>
 									</tbody>
 								</table>
 							</div>

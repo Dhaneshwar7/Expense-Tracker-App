@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../stylesheets/dashboard.css" />
 		<link rel="stylesheet" href="../stylesheets/wallet.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	</head>
 	<body>
 		<main id="main">
@@ -88,7 +89,7 @@
 						</li>
 					</template>
 				</div>
-				<div class="head-board wl-pd dfacjsb">
+				<div class="wallet-board wl-head-pd dfacjsb">
 					<div class="left-head wallet-head">
 						<div class="wallet-icon">
 							<img src="./wallet.png" alt="" />
@@ -111,8 +112,6 @@
 							/>
 							<!-- <button  style="opacity: 0;"></button> -->
 						</form>
-
-						
 					</div>
 				</div>
 				<div class="wallet-record">
@@ -120,13 +119,17 @@
 						<div class="wallet-top">
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
-								<h2>4500</h2>
-								<p>Expenses</p>
+								<h2>
+									<%= income.reduce((accumulator,currentValue)=> accumulator+
+									currentValue.incomeAmount , 0) %>
+								</h2>
+								<p>Total Income</p>
 							</div>
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
-								<h2>4500</h2>
-								<p>Expenses</p>
+								<h2><%= expenses.reduce((accumulator,currentValue)=> accumulator+
+								currentValue.amount , 0) %></h2>
+								<p>Total Expense</p>
 							</div>
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
@@ -134,12 +137,12 @@
 								<p>Expenses</p>
 							</div>
 						</div>
-						<div class="wallet-bottom">
-						</div>
+						<div class="wallet-bottom"></div>
 					</div>
 					<div class="wlr-right">
 						<h1>Budget</h1>
-						<div class="doughnut"></div>
+
+						<canvas id="myChart" width="150" height="150"></canvas>
 						<div class="wallet-total">
 							<span>
 								<h2 class="currency">
@@ -202,5 +205,86 @@
 		</main>
 		<script src="../javascripts/dashboard.js"></script>
 		<script src="../javascripts/lightdarkmode.js"></script>
+		<script>
+			const expensesData = JSON.parse('<%- expensesdata %>');
+			const incomeData = JSON.parse('<%- incomedata %>');
+			let cashTotal = 0;
+			let onlineTotal = 0;
+			let cardTotal = 0;
+			let expArr = [];
+
+			console.log(expensesData);
+			// console.log(incomeData);
+			const totalIncome = incomeData.reduce(
+				(accumulator, currentValue) => accumulator + currentValue.incomeAmount,
+				0
+			);
+			const totalExpense = expensesData.reduce(
+				(acc, curr) => acc + curr.amount,
+				0
+			);
+			const remainingtotal = totalIncome - totalExpense;
+			// console.log(totalIncome);
+			// console.log(totalExpense);
+			// console.log(remainingtotal);
+			expensesData.forEach(eachExpense => {
+				expArr.push(eachExpense.amount);
+
+				// Loop through expenses and calculate total amounts for each payment mode
+				if (eachExpense.paymentmode === 'Cash') {
+					cashTotal += eachExpense.amount;
+				} else if (eachExpense.paymentmode === 'Online') {
+					onlineTotal += eachExpense.amount;
+				} else if (eachExpense.paymentmode === 'Card') {
+					cardTotal += eachExpense.amount;
+				}
+			});
+			console.log(expArr);
+			console.log(`CashTotal-${cashTotal}`);
+			console.log(`OnlineTotal-${onlineTotal}`);
+			console.log(`CardTotal-${cardTotal}`);
+
+			// Get canvas element
+			var ctx = document.getElementById('myChart').getContext('2d');
+			// Create chart
+			var myCharts = new Chart(ctx, {
+				type: 'polarArea', // Type of chart (e.g., bar, line, pie, etc.)
+
+				data: {
+					labels: ['Total Savings', 'Total Income', 'Total Expense'], // Labels for the data
+					datasets: [
+						{
+							// label: [],
+							data: [remainingtotal, totalIncome, totalExpense],
+							backgroundColor: ['black', 'gold', 'red'],
+							hoverOffset: 3,
+						},
+					],
+				},
+				options: {
+					// Configuration options
+					// responsive: true,
+					// maintainAspectRatio: ture,
+					// aspectRatio: 1 / 2,
+					// onResize: null,
+					// resizeDelay: 0,
+					// scales: {
+					// 	x: {
+					// 		beginAtZero: true, // Start y-axis at 0
+					// 	},
+					// },
+					plugins: {
+						legend: {
+							labels: {
+								fontSize: 8, // Set the font size for all labels
+							},
+							label: {
+								fontSize: 8, // Set the font size for all labels
+							},
+						},
+					},
+				},
+			});
+		</script>
 	</body>
 </html>
