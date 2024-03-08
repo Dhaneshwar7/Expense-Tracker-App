@@ -106,10 +106,12 @@ input[type='month'] {
 .wallet-total span .currency {
 	/* color: var(--graycolor); */
 	color: var(--fontBlack);
-	font-size: 1.5vmax;
+	font-size: 1.4vmax;
+	margin-bottom: 5px;
 }
 .wallet-total span p {
 	font-size: 1vmax;
+	color: var(--fontBlack);
 }
 .wallet-top {
 	display: flex;
@@ -119,8 +121,10 @@ input[type='month'] {
 .wallet-card h2 {
 	color: var(--fontBlack);
 	font-size: 1.4vmax;
+	margin-bottom: 5px;
 }
 .wallet-card p {
+	color: var(--fontBlack);
 	font-size: 1vmax;
 }
 /* --------- Big Categories Expense -------- */

@@ -92,7 +92,7 @@
 				<div class="wallet-board wl-head-pd dfacjsb">
 					<div class="left-head wallet-head">
 						<div class="wallet-icon">
-							<img src="./wallet.png" alt="" />
+							<!-- <img src="./wallet.png" alt="" /> -->
 						</div>
 						<div class="wallet-title">
 							<h1>Wallet</h1>
@@ -127,14 +127,21 @@
 							</div>
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
-								<h2><%= expenses.reduce((accumulator,currentValue)=> accumulator+
-								currentValue.amount , 0) %></h2>
+								<h2>
+									<%= expenses.reduce((accumulator,currentValue)=> accumulator+
+									currentValue.amount , 0) %>
+								</h2>
 								<p>Total Expense</p>
 							</div>
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
-								<h2>4500</h2>
-								<p>Expenses</p>
+								<h2>
+									<%= income.reduce((accumulator,currentValue)=> accumulator+
+									currentValue.incomeAmount , 0) -
+									expenses.reduce((accumulator,currentValue)=> accumulator+
+									currentValue.amount , 0) %>
+								</h2>
+								<p>Total Savings</p>
 							</div>
 						</div>
 						<div class="wallet-bottom"></div>
@@ -203,6 +210,7 @@
 			<%- include('partials/RightContainer.ejs') %>
 			<!--  ----Right Container Code ----- -->
 		</main>
+		<script src="../javascripts/common.js"></script>
 		<script src="../javascripts/dashboard.js"></script>
 		<script src="../javascripts/lightdarkmode.js"></script>
 		<script>

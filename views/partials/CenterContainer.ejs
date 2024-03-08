@@ -42,7 +42,6 @@
 		<% }) %>
 
 		<!-- This is BLANK CONTAINER where we are going to show data by SEARCH BAR MANIPULATION -->
-		<div class="search-showing notvisible" data-expense-container></div>
 		<!-- from JavaScript Data which have collect from SERVER EXPENSE DATA now that we are using here and show it to BLANK CONTAINER -->
 		<template data-expense-template>
 			<li data-search-show>
@@ -132,7 +131,9 @@
 					<button class="addExpenseFormBtn" onclick="submitExpense()">
 						Submit Expense
 					</button>
-					<div class="success-message expense-success-message msg">Expense Added Successfully!</div>
+					<div class="success-message expense-success-message msg">
+						Expense Added Successfully!
+					</div>
 					<div class="detailsfill-message msg">Fill all the Details.</div>
 				</form>
 				<form class="addIncomeForm" action="/addincome" method="post">
@@ -161,7 +162,12 @@
 					</div>
 					<div class="expFormbox required">
 						<label for="category">Currency</label>
-						<select name="currency" class="addIncomeCurrencyInput" id="category" required>
+						<select
+							name="currency"
+							class="addIncomeCurrencyInput"
+							id="category"
+							required
+						>
 							<option value="" disabled selected>Select Currency</option>
 							<option value="inr">INR</option>
 							<option value="usd">USD</option>
@@ -177,7 +183,9 @@
 					<button class="addExpenseFormBtn" onclick="submitIncome()">
 						Add Income
 					</button>
-					<div class="success-message income-success-message">Income Added Successfully!</div>
+					<div class="success-message income-success-message">
+						Income Added Successfully!
+					</div>
 					<div class="detailsfill-message">Fill all the Details.</div>
 				</form>
 			</div>

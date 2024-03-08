@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 var morgan = require('morgan');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
+const CryptoJS = require('crypto-js');
 
 // db connect
 require('./models/db');
@@ -35,7 +36,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 
-
 // static(/) public code use in app
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,23 +46,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 		secret: 'opkd8et4nlk',
 // 	})
 // );
+
+// Generate a random secret key
+const secretKey = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Hex);
+
+console.log('Generated secret key:', secretKey);
 app.use(
 	session({
 		resave: false,
 		saveUninitialized: true,
-		secret: 'money money money',
+		secret: secretKey,
 		cookie: {
 			maxAge: 24 * 60 * 60 * 1000,
 		}, //100 hours
-		store: MongoStore.create(
-			{
-				mongoUrl: process.env.MONGO_URL,
-				autoRemove: 'disabled',
+		store: MongoStore.create({
+			mongoUrl: process.env.MONGO_URL,
+			ttl: 24 * 60 * 60, // Session TTL in seconds (24 hours)
+			autoRemove: 'native', // Remove expired sessions automatically
+			crypto: {
+				secret: secretKey,
 			},
-			function (err) {
-				console.log(err);
-			}
-		),
+			touchAfter: 24 * 3600, // Update session every 24 hours (in seconds)
+		}),
 	})
 );
 app.use(passport.initialize());
