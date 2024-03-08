@@ -254,6 +254,29 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 			wallcal: moment().format('YYYY-MM'),
 		};
 		// console.log(currentTime);
+		console.log(typeof expenses);
+		const sortedData = expenses.sort((a, b) => b.amount - a.amount);
+		console.log(`this is so ${sortedData}`);
+
+	const sData = expenses.sort((a, b) => a.category.localeCompare(b.category));
+	console.log(sData);
+
+	// Step 2: Calculate the total amount for each category and store in variables
+	let transportationTotal = 0;
+	let foodTotal = 0;
+
+	sData.forEach(obj => {
+		if (obj.category === 'Transportation') {
+			transportationTotal += obj.amount;
+		} else if (obj.category === 'Food') {
+			foodTotal += obj.amount;
+		}
+	});
+
+	// Display the total amount for each category
+	console.log('Transportation Total:', transportationTotal);
+	console.log('Food Total:', foodTotal);
+
 		res.render('wallet', {
 			admin: req.user,
 			expenses,
@@ -401,7 +424,7 @@ router.post('/profile-update', isLoggedIn, async (req, res, next) => {
 		const user = await User.findByIdAndUpdate(
 			{ _id: req.user.id },
 			updateFields,
-			{ new: true, runValidators: true }	
+			{ new: true, runValidators: true }
 		);
 		console.log(req.body);
 		console.log(user);

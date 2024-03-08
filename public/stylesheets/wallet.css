@@ -119,6 +119,7 @@ input[type='month'] {
 	justify-content: space-between;
 }
 .wallet-card h2 {
+	text-align: center;
 	color: var(--fontBlack);
 	font-size: 1.4vmax;
 	margin-bottom: 5px;

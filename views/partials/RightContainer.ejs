@@ -16,36 +16,37 @@
 			</div>
 		</div>
 		<div class="profile-container">
-			<div class="profile-pic dp">
-				<img src="<%= admin.logo %>" alt="">
+			<div class="profile-pic">
+				<div class="dp" title="Click and Watch Profile Pic">
+					<img src="<%= admin.logo %>" alt="" />
 				</div>
+				<a href="/profile" class="edit-profile" title="Edit Profile">
+					<img src="../../images/edit-profile1.svg" alt="" />
+				</a>
+			</div>
 
-				<div class="profile-name"><%= admin.username %></div>
-			</div>
-			<ul class="total-expense">
-				<li>
-					<i class="ri-calendar-close-line"></i>
-					<span>Top Up</span>
-				</li>
-				<li>
-					<i class="ri-calendar-close-line"></i>
-					<span>Pay</span>
-				</li>
-				<li>
-					<i class="ri-calendar-close-line"></i>
-					<span>Send</span>
-				</li>
-				<li>
-					<i class="ri-add-circle-fill"></i>
-					<span>Add</span>
-				</li>
-			</ul>
-			<div class="recent-transaction">
-				<div class="recent-title">
-					
-				</div>
-			</div>
+			<div class="profile-name"><%= admin.username %></div>
 		</div>
-
+		<ul class="total-expense">
+			<li>
+				<i class="ri-calendar-close-line"></i>
+				<span>Top Up</span>
+			</li>
+			<li>
+				<i class="ri-calendar-close-line"></i>
+				<span>Pay</span>
+			</li>
+			<li>
+				<i class="ri-calendar-close-line"></i>
+				<span>Send</span>
+			</li>
+			<li>
+				<i class="ri-add-circle-fill"></i>
+				<span>Add</span>
+			</li>
+		</ul>
+		<div class="recent-transaction">
+			<div class="recent-title"></div>
+		</div>
 	</div>
 </div>
