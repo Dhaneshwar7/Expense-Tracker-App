@@ -107,3 +107,15 @@ function navigationAnimate() {
 	});
 }
 navigationAnimate();
+
+
+
+// const currentDate = new Date();
+
+// // Format the current date as YYYY-MM (required by the input type="month")
+// const currentYear = currentDate.getFullYear();
+// const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+// const currentMonthYear = `${currentYear}-${currentMonth}`;
+
+// // Set the value of the input element to the current month
+// document.getElementById('month-input').value = currentMonthYear;

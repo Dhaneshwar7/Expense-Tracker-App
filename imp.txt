@@ -10,6 +10,11 @@ inline fold extension mohamad almairi
 
 console.log(require('dotenv').config());
 
+------ design refrence -----
+https://in.pinterest.com/pin/825284700477985507/
+
+https://in.pinterest.com/pin/1041950063772439997/2
+
 
 
 

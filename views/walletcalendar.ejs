@@ -99,48 +99,38 @@
 							<p>Change default Wallet</p>
 						</div>
 					</div>
-				<div class="right-head wallet-head">
-					<form action="/search-calendar" id="wallet-calendar">
-						<input
-							type="month"
-							name="walletmonth"
-							min="2021-01"
-							max="2025-01"
-							onchange="selectCalendarDate()"
+					<div class="right-head wallet-head">
+						<form action="/search-calendar" id="wallet-calendar">
+							<input
+								type="month"
+								name="walletmonth"
+								min="2021-01"
+								max="2025-01"
+								onchange="selectCalendarDate()"
 							id="month-input"
 							value=<%= currentMonthYear %>
-						/>
-					</form>
+							/>
+
+						</form>
+					</div>
 				</div>
-				</div>
-				
+
 				<div class="wallet-record">
 					<div class="wlr-left">
 						<div class="wallet-top">
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
-								<h2>
-									<%= income.reduce((accumulator,currentValue)=> accumulator+
-									currentValue.incomeAmount , 0) %>
-								</h2>
+								<h2><%= totalIncome %></h2>
 								<p>Total Income</p>
 							</div>
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
-								<h2>
-									<%= expenses.reduce((accumulator,currentValue)=> accumulator+
-									currentValue.amount , 0) %>
-								</h2>
+								<h2><%= totalExpense %></h2>
 								<p>Total Expense</p>
 							</div>
 							<div class="wallet-card">
 								<div class="wallet-icon"></div>
-								<h2>
-									<%= income.reduce((accumulator,currentValue)=> accumulator+
-									currentValue.incomeAmount , 0) -
-									expenses.reduce((accumulator,currentValue)=> accumulator+
-									currentValue.amount , 0) %>
-								</h2>
+								<h2><%= savingTotal %></h2>
 								<p>Total Savings</p>
 							</div>
 						</div>
@@ -152,17 +142,11 @@
 						<canvas id="myChart" width="150" height="150"></canvas>
 						<div class="wallet-total">
 							<span>
-								<h2 class="currency">
-									<%= income.reduce((accumulator,currentValue)=> accumulator+
-									currentValue.incomeAmount , 0) %>
-								</h2>
+								<h2 class="currency"><%= totalIncome %></h2>
 								<p>Monthly limit</p>
 							</span>
 							<span>
-								<h2 class="currency">
-									<%= expenses.reduce((accumulator,currentValue)=> accumulator+
-									currentValue.amount , 0) %>
-								</h2>
+								<h2 class="currency"><%= savingTotal %></h2>
 								<p>Remaining</p>
 							</span>
 						</div>

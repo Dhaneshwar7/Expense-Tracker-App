@@ -238,12 +238,44 @@ router.post('/addincome', isLoggedIn, async function (req, res, next) {
 	}
 });
 
+// -----
+// router.get('/wallet', isLoggedIn, async function (req, res, next) {
+// 	try {
+// 		const { expenses } = await req.user.populate('expenses');
+
+// 		const { income } = await req.user.populate('income');
+
+// 		const currentTime = {
+// 			fullDate: moment().format('MMMM MM DD YY'),
+// 			fullMonth: moment().format('MMMM'),
+// 			fullYear: moment().format('YYYY'),
+// 			currDay: moment().format('DD'),
+// 			currMonth: moment().format('MM'),
+// 			currYear: moment().format('YY'),
+// 			wallcal: moment().format('YYYY-MM'),
+// 		};
+// 		res.send(monthTotal);
+// 		res.render('wallet', {
+// 			admin: req.user,
+// 			expenses,
+// 			income,
+// 			currentTime,
+// 			expensesdata: JSON.stringify(expenses),
+// 			incomedata: JSON.stringify(income),
+// 		});
+// 	} catch (error) {
+// 		res.send(error);
+// 	}
+// });
+
 /* --------------- Other Pages -------------- */
+
 router.get('/wallet', isLoggedIn, async function (req, res, next) {
 	try {
 		const { expenses } = await req.user.populate('expenses');
 
 		const { income } = await req.user.populate('income');
+
 		const currentTime = {
 			fullDate: moment().format('MMMM MM DD YY'),
 			fullMonth: moment().format('MMMM'),
@@ -253,35 +285,45 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 			currYear: moment().format('YY'),
 			wallcal: moment().format('YYYY-MM'),
 		};
+		const currentDate = new Date();
+
+		// Format the current date as YYYY-MM (required by the input type="month")
+		const currentYear = currentDate.getFullYear();
+		const currentMonth = (currentDate.getMonth() + 1)
+			.toString()
+			.padStart(2, '0');
+		const currentMonthYear = `${currentYear}-${currentMonth}`;
+
 		// console.log(currentTime);
 		console.log(typeof expenses);
 		const sortedData = expenses.sort((a, b) => b.amount - a.amount);
 		console.log(`this is so ${sortedData}`);
 
-	const sData = expenses.sort((a, b) => a.category.localeCompare(b.category));
-	console.log(sData);
+		const sData = expenses.sort((a, b) => a.category.localeCompare(b.category));
+		console.log(sData);
 
-	// Step 2: Calculate the total amount for each category and store in variables
-	let transportationTotal = 0;
-	let foodTotal = 0;
+		// Step 2: Calculate the total amount for each category and store in variables
+		let transportationTotal = 0;
+		let foodTotal = 0;
 
-	sData.forEach(obj => {
-		if (obj.category === 'Transportation') {
-			transportationTotal += obj.amount;
-		} else if (obj.category === 'Food') {
-			foodTotal += obj.amount;
-		}
-	});
+		sData.forEach(obj => {
+			if (obj.category === 'Transportation') {
+				transportationTotal += obj.amount;
+			} else if (obj.category === 'Food') {
+				foodTotal += obj.amount;
+			}
+		});
 
-	// Display the total amount for each category
-	console.log('Transportation Total:', transportationTotal);
-	console.log('Food Total:', foodTotal);
+		// Display the total amount for each category
+		console.log('Transportation Total:', transportationTotal);
+		console.log('Food Total:', foodTotal);
 
 		res.render('wallet', {
 			admin: req.user,
 			expenses,
 			income,
 			currentTime,
+			currentMonthYear,
 			expensesdata: JSON.stringify(expenses),
 			incomedata: JSON.stringify(income),
 		});
@@ -289,75 +331,123 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 		res.send(error);
 	}
 });
-router.post('/search-calendar', isLoggedIn, async function (req, res, next) {
+
+router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 	try {
-		let { expenses } = await req.user.populate('expenses');
 		const { income } = await req.user.populate('income');
-		const [selYear, selMonth] = await req.body.walletmonth.split('-');
-		console.log(`this is year :${selYear} , this month${selMonth}`);
-		console.log(selYear);
-		console.log(selMonth);
+		const { expenses } = await req.user.populate('expenses');
+
+		// Check if walletmonth is provided and in the correct format
+		const walletMonth = req.query.walletmonth;
+		if (!walletMonth || !walletMonth.includes('-')) {
+			return res
+				.status(400)
+				.json({ error: 'Invalid or missing walletmonth parameter' });
+		}
+		console.log(walletMonth);
+
+		// Extract year and month from the walletmonth parameter
+		const [selYear, selMonth] = walletMonth.split('-');
+		const yearInt = parseInt(selYear);
+		const monthInt = parseInt(selMonth);
+		console.log(yearInt);
+		console.log(monthInt);
+		const currentMonthYear = `${selYear}-${selMonth}`;
+
+		// Validate year and month
+		if (isNaN(yearInt) || isNaN(monthInt)) {
+			return res.status(400).json({ error: 'Invalid year or month' });
+		}
+
+		const expenseTotal = await Expense.aggregate([
+			{
+				$match: {
+					user: req.user._id,
+					$expr: {
+						$and: [
+							{ $eq: [{ $year: '$createdAt' }, yearInt] },
+							{ $eq: [{ $month: '$createdAt' }, monthInt] },
+						],
+					},
+				},
+			},
+			// ---second option---
+			{
+				$group: {
+					_id: null,
+					totalExpenseOfMonth: { $sum: '$amount' }, // Sum the Amount
+				},
+			},
+			{
+				$project: {
+					totalExpenseOfMonth: { $ifNull: ['$totalExpenseOfMonth', 0] },
+				},
+			},
+		]);
+
+		// Perform aggregation to calculate total income for the specified month and year
+		const incomeTotal = await Income.aggregate([
+			{
+				$match: {
+					user: req.user._id,
+					$expr: {
+						$and: [
+							{ $eq: [{ $year: '$createdAt' }, yearInt] },
+							{ $eq: [{ $month: '$createdAt' }, monthInt] },
+						],
+					},
+				},
+			},
+			// ---second option---
+			{
+				$group: {
+					_id: null,
+					totalIncomeMonthAmount: { $sum: '$incomeAmount' }, // Sum the incomeAmount
+				},
+			},
+			// ----
+			// {
+			// 	$group: {
+			// 		_id: { month: '$createdAt', description: '$description' },
+			// 		totalIncomeMonthAmount: { $sum: '$incomeAmount' },
+			// 	},
+			// },
+			{
+				$project: {
+					totalIncomeMonthAmount: { $ifNull: ['$totalIncomeMonthAmount', 0] },
+				},
+			},
+		]);
 		const currentTime = {
-			wallcal: req.body.walletmonth,
+			fullDate: moment().format('MMMM MM DD YY'),
+			fullMonth: moment().format('MMMM'),
+			fullYear: moment().format('YYYY'),
+			currDay: moment().format('DD'),
+			currMonth: moment().format('MM'),
+			currYear: moment().format('YY'),
+			wallcal: moment().format('YYYY-MM'),
 		};
-		const inpuDat = req.body.walletmonth;
-		console.log(inpuDat);
-		function getMonthName(monthNumber) {
-			const date = new Date(2022, monthNumber - 1, 1); // Subtract 1 as months are zero-based in JavaScript
-			const monthName = new Intl.DateTimeFormat('en-US', {
-				month: 'short',
-			}).format(date);
-			return monthName;
-		}
-		const numericMonth = Number(selMonth); // Replace this with the actual numeric month
-		const monthName = getMonthName(numericMonth);
+		const totalExpense =
+			expenseTotal.length > 0 ? expenseTotal[0].totalExpenseOfMonth : 0;
+		const totalIncome =
+			incomeTotal.length > 0 ? incomeTotal[0].totalIncomeMonthAmount : 0;
+		let savingTotal = totalIncome - totalExpense;
+		console.log(totalExpense, totalIncome, savingTotal);
 
-		// Example usage
-		console.log(monthName); // Output: March
-		console.log(typeof monthName);
-		const yearName = String(selYear);
-		console.log(yearName);
-		console.log(typeof yearName);
-
-		// console.log(req.body.walletmonth);
-		// console.log(typeof req.body.walletmonth);
-
-		// console.log(income);
-		function findExpensesByDigits(expensesArray, userInpMonth, useInpYear) {
-			const matchingExpenses = expensesArray.filter(expense => {
-				// console.log(typeof expense.createdAt);
-				let createdAtString = expense.createdAt.toString();
-				console.log(`originanl ${createdAtString}`);
-				console.log(typeof createdAtString);
-				const datstring = expense.createdAt.toLocaleDateString();
-				console.log(datstring);
-				console.log(typeof createdAtString);
-				const monthstring = expense.createdAt.getMonth();
-				const yearSring = expense.createdAt.getFullYear();
-				console.log(`this is mon ${monthstring} and year ${yearSring}`);
-				return (createdAtString =
-					createdAtString.includes(userInpMonth) ||
-					createdAtString.includes(useInpYear));
-			});
-			return matchingExpenses;
-		}
-
-		// Example usage
-		// const userInpMonth = ; // Replace this with user input
-		const matchingExpenses = findExpensesByDigits(
-			expenses,
-			monthName,
-			yearName
-		);
-		console.log(matchingExpenses);
-		res.render('wallet', {
+		res.render('walletcalendar', {
 			admin: req.user,
 			expenses,
 			income,
 			currentTime,
+			totalExpense,
+			totalIncome,
+			savingTotal,
+			currentMonthYear,
+			expensesdata: JSON.stringify(expenses),
+			incomedata: JSON.stringify(income),
 		});
 	} catch (error) {
-		res.send(error);
+		res.status(500).json({ error: 'Internal Server Error' });
 	}
 });
 

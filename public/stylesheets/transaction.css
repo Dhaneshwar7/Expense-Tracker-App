@@ -41,9 +41,18 @@ th {
 	text-align: left;
 	font-weight: 600;
 	font-size: 14px;
+	white-space: nowrap;
 	/* color: #fff; */
 	color: black;
 	text-transform: uppercase;
+}
+.center {
+	margin: auto;
+	padding: auto;
+	text-align: center;
+}
+.left {	
+	text-align: left;
 }
 td {
 	padding: 15px;
@@ -64,10 +73,19 @@ td.exp-name {
 .exp-count {
 	font-size: 13px;
 	font-weight: 800;
+	width: fit-content;
+	margin: auto;
+	padding: auto;
 }
 .expPayment {
 	font-style: italic;
 	font-weight: 700;
+	font-size: 12px;
+}
+.expDate {
+	text-align: center;
+	font-style: italic;
+	font-weight: 400;
 	font-size: 12px;
 }
 

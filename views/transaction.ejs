@@ -77,11 +77,12 @@
 								<table cellpadding="0" cellspacing="0" border="0">
 									<thead>
 										<tr>
-											<th>Code</th>
+											<th class="center">Code</th>
 											<th>Name</th>
-											<th>Price</th>
+											<th class="center">Price</th>
 											<th>Category</th>
 											<th>Payment Mode</th>
+											<th class="center">Time</th>
 										</tr>
 									</thead>
 								</table>
@@ -91,17 +92,29 @@
 									<tbody>
 										<% if (expenses.length === 0) { %>
 										<tr>
-											<td colspan="5">No transactions</td>
+											<td colspan="6">No transactions</td>
 										</tr>
 										<% } else { %> <% expenses.forEach(function(exp ,idx){ %>
 										<tr class="expCard">
 											<td>
-												<div class="exp-count"><%= idx + 1 %></div>
+												<div class="exp-count left"><%= idx + 1 %></div>
 											</td>
 											<td class="exp-name"><%= exp.remark %></td>
-											<td>₹ <%= exp.amount %></td>
-											<td><%= exp.category %></td>
-											<td class="expPayment"><%= exp.paymentmode %></td>
+											<td class="center">₹ <%= exp.amount %></td>
+											<td class="center"><%= exp.category %></td>
+											<td class="expPayment center"><%= exp.paymentmode %></td>
+											<td class="expDate">
+												<p>
+													<%= exp.createdAt.getHours() %>:<%=
+													exp.createdAt.getMinutes() %>:<%=
+													exp.createdAt.getSeconds() %>
+												</p>
+												<p>
+													<%= exp.createdAt.toLocaleDateString(undefined, {
+													weekday: 'short', year: 'numeric', month: 'short',
+													day: 'numeric',}) %>
+												</p>
+											</td>
 										</tr>
 										<% }) %> <% } %>
 									</tbody>
