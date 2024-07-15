@@ -18,7 +18,7 @@ const uploadOnCloudinary = async (localFilePath ,onUser) => {
 					resource_type: 'image',
 					public_id: `${onUser._id}_logo`,
 				});
-        // file has been uploaded successfull
+        // file has been uploaded successfully
         //console.log("file is uploaded on cloudinary ", response.url);
         fs.unlinkSync(localFilePath)
         return response;

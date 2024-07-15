@@ -12,12 +12,12 @@ const userModel = new mongoose.Schema(
 		firstname: {
 			type: String,
 			// required: [true, 'First Name is Required'],
-			// minLength: [3, 'Firstname should be atleast of 3 Character'],
+			// minLength: [3, 'Firstname should be atleast of 3 Characters'],
 		},
 		lastname: {
 			type: String,
 			// required: [true, 'Last Name is Required'],
-			// minLength: [3, 'Last Name should be atleast of 3 Character'],
+			// minLength: [3, 'Last Name should be atleast of 3 Characters'],
 		},
 		email: {
 			type: String,

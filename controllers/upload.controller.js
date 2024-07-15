@@ -25,19 +25,19 @@ export{uploadonCloudinary}
 
 
 
-function (req, res, next) {
-	cloudinary.uploader.upload(req.file.path, function (err, result) {
-		if (err) {
-			console.log(err);
-			return res.status(500).json({
-				success: false,
-				message: 'Eroor try agian',
-			});
-		}
-		res.status(200).json({
-			success: true,
-			message: 'File uploaded',
-			data: result,
-		});
-	});
-}
+// function (req, res, next) {
+// 	cloudinary.uploader.upload(req.file.path, function (err, result) {
+// 		if (err) {
+// 			console.log(err);
+// 			return res.status(500).json({
+// 				success: false,
+// 				message: 'Eroor try agian',
+// 			});
+// 		}
+// 		res.status(200).json({
+// 			success: true,
+// 			message: 'File uploaded',
+// 			data: result,
+// 		});
+// 	});
+// }

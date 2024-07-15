@@ -39,6 +39,7 @@ function normalizePort(val) {
   if (isNaN(port)) {
     // named pipe
     return val;
+    //something
   }
 
   if (port >= 0) {
