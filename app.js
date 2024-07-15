@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Generate a random secret key
 const secretKey = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Hex);
 
-console.log('Generated secret key:', secretKey);
+// console.log('Generated secret key:', secretKey);
 app.use(
 	session({
 		resave: false,

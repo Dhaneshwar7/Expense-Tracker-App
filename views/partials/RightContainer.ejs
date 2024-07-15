@@ -1,9 +1,22 @@
 <div class="right-container">
 	<div class="right-desktop">
 		<div class="right-top">
+			<div class="input-box" id="center-input-box">
+				<i class="uil uil-search"></i>
+				<input
+					type="text"
+					id="search-input"
+					oninput="SetDefault($(this).val());"
+					placeholder="Search here..."
+				/>
+				<button class="button">Search</button>
+			</div>
+
 			<div class="right-icons">
 				<div class="setting-btn">
-					<i class="ri-settings-5-fill menuBtn"></i>
+					<a style="color: black;" href="/profile">
+						<i class="ri-settings-5-fill menuBtn"></i>
+					</a>
 				</div>
 				<div class="close-menu">
 					<div class="open-btn obb">

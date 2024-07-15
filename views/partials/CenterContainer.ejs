@@ -2,17 +2,18 @@
 	<section class="overlay"></section>
 
 	<!-- Search Bar with Data filter Manipulation -->
-	<div class="search-container">
-		<div class="input-box">
-			<i class="uil uil-search"></i>
-			<input
-				type="text"
-				id="search-input"
-				oninput="SetDefault($(this).val());"
-				placeholder="Search here..."
-			/>
-			<button class="button">Search</button>
-		</div>
+	<div class="search-container center-search">
+			<div class="input-box" id="center-input-box">
+				<i class="uil uil-search"></i>
+				<input
+					type="text"
+					id="search-input"
+					oninput="SetDefault($(this).val());"
+					placeholder="Search here..."
+				/>
+				<button class="button">Search</button>
+			</div>
+
 
 		<!-- Render a SERVER EXPENSE DATA from Server/Database and hidden inside the Template Tag from here we send Data to our Javascript file -->
 		<% expenses.forEach(e=>{ %>

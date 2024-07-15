@@ -278,7 +278,17 @@ nav ul li a span {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+.nav-input-box {
+	display: flex;
+}
+#center-input-box {
+	display: none;
+}
+.nav-search {
+	padding: 2px 2px;
+}
 .input-box {
+	display: flex;
 	position: relative;
 	height: 50px;
 	max-width: 70%;
@@ -1052,7 +1062,7 @@ input[type='number']::-webkit-outer-spin-button {
 	#main {
 		height: 100vh;
 		width: 100vw;
-		padding: 1vh 1rem 12vh 1rem;
+		padding: 1vh 1rem 1vh 1rem;
 		display: flex;
 		overflow: hidden;
 		flex-direction: column-reverse;
@@ -1151,10 +1161,23 @@ input[type='number']::-webkit-outer-spin-button {
 	}
 	/* SEARCH CONTAINER RESPONSIVE */
 	.search-container {
+		display: none;
 		position: relative;
 		height: 10%;
 		width: 100%;
 		padding: 0px;
+	}
+
+	/* Nav Top right CONTAINER RESPONSIVE */
+	#center-input-box {
+		display: flex;
+	}
+	.search-container > .input-box {
+		display: none;
+		display: ;
+	}
+	.search-container.nav-input-box {
+		display: flex;
 	}
 	.search-box {
 		top: 35%;
@@ -1165,6 +1188,7 @@ input[type='number']::-webkit-outer-spin-button {
 		height: 200px;
 		background-color: #5955e7;
 	}
+
 	.input-box:hover {
 		height: 50px;
 	}
@@ -1188,9 +1212,12 @@ input[type='number']::-webkit-outer-spin-button {
 	/* ---------- Center Responsive ------- */
 	.center-container {
 		width: 100%;
-		height: 80%;
+		/* height: 80%; */
+		height: 100%;
+		/* min-height: 100vh; */
 		border-radius: 10px;
 		padding: 15px;
+		overflow: auto;
 	}
 	.head-board {
 		margin-top: 10px;
@@ -1236,6 +1263,50 @@ input[type='number']::-webkit-outer-spin-button {
 	.add-incomeBtn {
 		background-color: var(--darkGray);
 		border: 1px solid var(--darkWhite);
+	}
+	.financial-record {
+		flex-direction: column;
+	}
+	.fin-box {
+		width: 100%;
+		height: 80%;
+	}
+	.total-expense {
+		/* display: flex; */
+		display: none;
+
+		flex-wrap: wrap;
+		width: 100%;
+		/* flex-direction: row; */
+		/* background-color: red; */
+		align-items: center;
+		justify-content: space-around;
+		padding: 20px 0;
+	}
+	/* ----- Char Container  ----- */
+	.chart-container {
+		/* background-color: #707070; */
+		display: none;
+		position: relative;
+		height: 25vh;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 20px;
+	}
+	.chart-section {
+		display: none;
+		width: 48%;
+		height: 100%;
+		background-color: rgba(251, 252, 250, 0.621);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 22px;
+	}
+	.chart-section #chart-section{
+		width: ;
 	}
 }
 /* h - 608 , w- 1366 */

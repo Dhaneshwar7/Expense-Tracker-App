@@ -107,14 +107,25 @@ router.post('/signup', async function (req, res, next) {
 			// Flash an error message indicating that the user already exists
 			req.flash('error', 'User already exists');
 			// Redirect back to the signup page
-			res.redirect('/');
-		} else {
-			// If the error is not due to the user already existing, log and send the error
-			console.error(error);
-			res.send(error);
+			console.log('hdjldlfj');
+			return res.redirect('/');
 		}
 	}
 });
+// router.post('/register', function (req, res) {
+// 	var newUser = new User({ username: req.body.username });
+// 	User.register(newUser, req.body.password, function (err, user) {
+// 		if (err) {
+// 			console.log(err);
+// 			req.flash('error', err);
+// 			return res.render('register');
+// 		}
+// 		passport.authenticate('local')(req, res, function () {
+// 			req.flash('success', 'Welcome to YelpCamp ' + user.username);
+// 			res.redirect('/campgrounds');
+// 		});
+// 	});
+// });
 
 /*  ----------------  Forget Route  & Send Mail ----------------- */
 router.get('/forget', function (req, res, next) {
@@ -238,41 +249,12 @@ router.post('/addincome', isLoggedIn, async function (req, res, next) {
 	}
 });
 
-// -----
-// router.get('/wallet', isLoggedIn, async function (req, res, next) {
-// 	try {
-// 		const { expenses } = await req.user.populate('expenses');
-
-// 		const { income } = await req.user.populate('income');
-
-// 		const currentTime = {
-// 			fullDate: moment().format('MMMM MM DD YY'),
-// 			fullMonth: moment().format('MMMM'),
-// 			fullYear: moment().format('YYYY'),
-// 			currDay: moment().format('DD'),
-// 			currMonth: moment().format('MM'),
-// 			currYear: moment().format('YY'),
-// 			wallcal: moment().format('YYYY-MM'),
-// 		};
-// 		res.send(monthTotal);
-// 		res.render('wallet', {
-// 			admin: req.user,
-// 			expenses,
-// 			income,
-// 			currentTime,
-// 			expensesdata: JSON.stringify(expenses),
-// 			incomedata: JSON.stringify(income),
-// 		});
-// 	} catch (error) {
-// 		res.send(error);
-// 	}
-// });
-
 /* --------------- Other Pages -------------- */
 
 router.get('/wallet', isLoggedIn, async function (req, res, next) {
 	try {
 		const { expenses } = await req.user.populate('expenses');
+		console.log(expenses);
 
 		const { income } = await req.user.populate('income');
 
@@ -295,12 +277,13 @@ router.get('/wallet', isLoggedIn, async function (req, res, next) {
 		const currentMonthYear = `${currentYear}-${currentMonth}`;
 
 		// console.log(currentTime);
-		console.log(typeof expenses);
+		console.log(`wallet cr date ${currentMonthYear}`);
+		// console.log(typeof expenses);
 		const sortedData = expenses.sort((a, b) => b.amount - a.amount);
-		console.log(`this is so ${sortedData}`);
+		// console.log(`this is so ${sortedData}`);
 
 		const sData = expenses.sort((a, b) => a.category.localeCompare(b.category));
-		console.log(sData);
+		// console.log(sData);
 
 		// Step 2: Calculate the total amount for each category and store in variables
 		let transportationTotal = 0;
@@ -336,7 +319,8 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 	try {
 		const { income } = await req.user.populate('income');
 		const { expenses } = await req.user.populate('expenses');
-
+		console.log(expenses);
+		console.log(income);
 		// Check if walletmonth is provided and in the correct format
 		const walletMonth = req.query.walletmonth;
 		if (!walletMonth || !walletMonth.includes('-')) {
@@ -344,7 +328,7 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 				.status(400)
 				.json({ error: 'Invalid or missing walletmonth parameter' });
 		}
-		console.log(walletMonth);
+		console.log(`this is wallet month ${walletMonth}`);
 
 		// Extract year and month from the walletmonth parameter
 		const [selYear, selMonth] = walletMonth.split('-');
@@ -353,6 +337,7 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 		console.log(yearInt);
 		console.log(monthInt);
 		const currentMonthYear = `${selYear}-${selMonth}`;
+		console.log(`date sl calendar ${currentMonthYear}`);
 
 		// Validate year and month
 		if (isNaN(yearInt) || isNaN(monthInt)) {
@@ -375,15 +360,25 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 			{
 				$group: {
 					_id: null,
+					expenses: { $push: '$$ROOT' }, // Push each document into an array
 					totalExpenseOfMonth: { $sum: '$amount' }, // Sum the Amount
 				},
 			},
 			{
 				$project: {
+					_id: 0, // Exclude _id field
+					expenses: 1, // Include expenses array
 					totalExpenseOfMonth: { $ifNull: ['$totalExpenseOfMonth', 0] },
 				},
 			},
 		]);
+		// Extract the expenses array and total expense
+		const { expenses: expensesData, totalExpenseOfMonth: expensesDataTotal } =
+			expenseTotal[0] || {
+				expenses: [],
+				totalExpenseOfMonth: 0,
+			};
+		console.log(expensesData, expensesDataTotal);
 
 		// Perform aggregation to calculate total income for the specified month and year
 		const incomeTotal = await Income.aggregate([
@@ -402,6 +397,7 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 			{
 				$group: {
 					_id: null,
+					income: { $push: '$$ROOT' },
 					totalIncomeMonthAmount: { $sum: '$incomeAmount' }, // Sum the incomeAmount
 				},
 			},
@@ -414,10 +410,19 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 			// },
 			{
 				$project: {
+					_id: 0, // Exclude _id field
+					income: 1, // Include expenses array
 					totalIncomeMonthAmount: { $ifNull: ['$totalIncomeMonthAmount', 0] },
 				},
 			},
 		]);
+		// Extract the total income for the specific month
+		const { income: incomeData, totalIncomeMonthAmount } = incomeTotal[0] || {
+			income: [],
+			totalExpenseOfMonth: 0,
+		};
+		console.log('tima');
+		console.log(incomeData ,totalIncomeMonthAmount);
 		const currentTime = {
 			fullDate: moment().format('MMMM MM DD YY'),
 			fullMonth: moment().format('MMMM'),
@@ -432,7 +437,7 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 		const totalIncome =
 			incomeTotal.length > 0 ? incomeTotal[0].totalIncomeMonthAmount : 0;
 		let savingTotal = totalIncome - totalExpense;
-		console.log(totalExpense, totalIncome, savingTotal);
+		console.log(totalIncome, totalExpense, savingTotal);
 
 		res.render('walletcalendar', {
 			admin: req.user,
@@ -443,8 +448,8 @@ router.get('/search-calendar', isLoggedIn, async (req, res, next) => {
 			totalIncome,
 			savingTotal,
 			currentMonthYear,
-			expensesdata: JSON.stringify(expenses),
-			incomedata: JSON.stringify(income),
+			expensesdata: JSON.stringify(expensesData),
+			incomedata: JSON.stringify(incomeData),
 		});
 	} catch (error) {
 		res.status(500).json({ error: 'Internal Server Error' });
